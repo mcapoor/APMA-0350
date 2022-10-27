@@ -85,7 +85,7 @@ Solution:
     \item Isolate y
     \[y' = 2y \implies \frac{y'}{y} = 2\]
 
-    \item Recognise that the LHS is a derivatives
+    \item Recognize that the LHS is a derivatives
     \[(\ln |y|)' = 2\]
     \[\ln |y| = 2t + C\]
     \[|y| = e^{2t + C} = e^Ce^{2t}\]
@@ -149,14 +149,16 @@ Where $\alpha$ is the growth rate and $\beta$ is the limiting factor.
 To determine what happens at these solutions, we draw a \emph{bifurcation diagram}
 
 For the logistic equation $y= 3y (1 - \frac{y}{20})$, the bifurcation diagram is 
+
 \includegraphics{Images/bifurcation.png}
 
 Which gives us the graph 
+
 \includegraphics{Images/logistic graph.png}
 
 Classifying solutions:
 \begin{itemize}
-    \item If the solutions go towards an equiblibrium point from each side, it is \emph{stable}
+    \item If the solutions go towards an equilibrium point from each side, it is \emph{stable}
     \item If the solutions move away, it is \emph{unstable}
     \item If the solutions approach from one side and are repelled from the other, it is \emph{bistable}
 \end{itemize}
@@ -169,9 +171,639 @@ Given $(t_0, y_0)$, consider the ODE
     y(t_0) = y_0
 \end{cases}\]
 If $f$ and $f_y = \partial f / \partial y$ are continuous near $(t_0, y_0)$, then the ODE has a unique solution $y = y(t)$ for some $t \in (-\delta, \delta), \; \delta > t_0$
+
+Notes:
+\begin{itemize}
+    \item Because of the uniqueness property, solutions of $y' = f(y, t)$ can never cross
+    \item If you only want \emph{existence}, it is enough to assume that $f$ is continuous (you don't need the partial derivative!) 
+\end{itemize}
+
+\subsection*{Lecture Sep 16: Separable Equations}
+\emph{Separable equation:} an equation in the form 
+\[y' = \frac{f(t)}{g(y)}\]
+
+Example 1:
+\[\begin{cases}
+    t^2 \left(\frac{dy}{dt}\right) = (1 -t^2)(y^2 + 1)\\
+    y(1) = 0
+\end{cases}\]
+
+Solution:
+\[\frac{1}{y^2 + 1} \; dy = \frac{1 - t^2}{t^2} \; dt\]
+\[\int \frac{1}{y^2 + 1} \; dy = \int \frac{1}{t^2} - 1 \; dt\]
+\[\tan^{-1} y = -\frac{1}{t} - t + C\]
+\[y = \tan \left(-\frac{1}{t} - t + C\right)\]
+\[0 = \tan (-1 - 1 + C) implies C = 2\]
+\[\boxed{y = \tan \left(-\frac{1}{t} - t + 2\right)}\]
+
+Example 2: Solving the logistic equation
+\[\begin{cases}
+    y' = 3y\left(1 - \frac{y}{20}\right)\\
+    y(0) = 10
+\end{cases}\]
+
+Solution:
+\[\frac{dy}{y (1 - \frac{y}{20})} = 3\; dt\]
+\[\int \frac{dy}{y (\frac{20 - y}{20})} = \int 3 \; dt\]
+\[\int \frac{20}{y(20 - y)}\; dy = 3t + C\]
+
+To evaluate the left hand side, we must use \emph{partial fractions}:
+\[\frac{20}{y(20 - y)} = \frac{A}{y} + \frac{B}{20 - y} = \frac{20A - Ay + By}{y(20 - y)} = \frac{20A + (B - A)y}{y(20 - y)}\]
+\[20 = 20A + (B - A)y\]
+\[\begin{cases}
+    20A = 20\\
+    (B - A) = 0
+\end{cases} \implies \begin{cases}
+    A = 1\\
+    B = 1
+\end{cases}\]
+\[\implies \frac{20}{y (20 - y)} = \frac{1}{y} + \frac{1}{20 - y}\]
+
+Going back to the problem above:
+\[\int \frac{20}{y(20 - y)}\; dy = 3t + C\]
+\[\int \frac{1}{y} + \frac{1}{20 - y}\; dy = 3t + C\]
+\[\ln |y| - \ln |20 - y| = 3t + C\]
+\[\ln \left|\frac{y}{20 - y}\right| = 3t + C\]
+\[\frac{y}{20 - y} = \pm e^C e^{3t}\]
+\[y = Ce^{3t} (20 - y) = 20Ce^{3t} - Cye^{3t}\]
+\[y(1 + Ce^{3t}) = 20Ce^{3t}\]
+\[\boxed{y = \frac{20Ce^{3t}}{1 + Ce^{3t}}}\]
+
+\subsection*{Lecture Sep 19: Integrating Factors}
+To solve equations in the form
+\[y' + \alpha y = f(t)\]
+multiply by $e^{at}$
+
+Example 1: 
+\[\begin{cases}
+    3y' = 6y + t\\
+    y(0) = 1
+\end{cases}\]
+
+Solution:
+\[3y' - 6y = t\]
+\[y' - 2y = \frac{1}{3}t\]
+\[(y' - 2y)e^{-2t} = \frac{1}{3}te^{-2t}\]
+\[y'e^{-2t} - 2y e^{-2t} = \frac{1}{3}te^{-2t} \]
+\[(y e^{-2t})' = \frac{1}{3}te^{-2t}\]
+\[y e^{-2t} = \int \frac{t}{3}e^{-2t}\]
+\[y e^{-2t} = \frac{t}{3} \frac{e^{-2t}}{-2} - \int \frac{1}{3} \frac{e^{-2t}}{-2}\; dt \quad \text{(By parts)}\]
+\[y e^{-2t} = -\frac{te^{-2t}}{6} - \frac{1}{12}e^{-2t}+C\]
+\[\boxed{y = -\frac{t}{6} - \frac{1}{12} + Ce^{2t}}\]
+
+\emph{More general integrating factor:}
+For \[y' + P(t) y = f(t)\]
+multiply by 
+\[e^{\int P(t) dt}\]
+
+Example 2: 
+\[y' + 3t^2 y = 6t^2\]
+
+Solution:
+\[(y e^{\int 3t^2\; dt})'= 6t^2 e^{\int 3t^2\; dt}\]
+\[(y e^{t^3})' = 6t^2 e^{t^3}\]
+\[ye^{t^3} = \int 6t^2 e^{t^3} \; dt \quad (u = t^3, 2du = 6t^2\; dt)\]
+\[ye^{t^3} = \int 2e^u \; du = 2e^u + C = 2e^{t^3} + C\]
+\[y = 2 + Ce^{-t^3}\]
+
+\subsection*{Lecture Sep 21: Exact Equations}
+\emph{Exact equation:} equation in the form 
+\[P(x, y) \; dx + Q(x, y) \; dy\]
+
+Many ODEs can be reduced to this form:
+\[y' = \frac{2xy + y^2}{x^2 + 2xy}\]
+\[\implies (x^2 + 2xy) \; dy = -(2xy + y^2) \; dx\]
+\[\implies (x^2 + 2xy) \; dy + (2xy + y^2) \; dx = 0\]
+
+Notice, this is the same notation used to solve line integrals in Multivariable calculus!
+
+\emph{Gradient:} If $f = f(x,y)$, then $\nabla f = \langle f_x, f_y \rangle$
+
+To solve, we must find a \emph{potential function} $f$ of $F(x, y)$ such that $F = \nabla f$
+
+Example 1: Find f for $F(x,y) = \langle2xy + y^2, x^2 + 2xy\rangle$
+Solution:
+\begin{enumerate}
+    \item Check that F is conservative
+    \[P_y = 2x + 2y\]
+    \[Q_x = 2x + 2y\]
+    \[P_y = Q_x, \; \therefore F \text{ is conservative}\]
+    Because F is conservative, a potential function exists 
+
+    \item Find $f$
+    \[F = \nabla f \implies \langle P, Q\rangle = \langle f_x, f_y \rangle\]
+    \[f_x = 2xy + y^2 \implies f = \int 2xy + y^2\; dx = x^2y + y^2x + g(y)\]
+    \[f_y = x^2 + 2xy \implies f = \int x^2 + 2xy\; dy = x^2 y + xy^2 + f(x)\]
+
+    Collecting all the terms,
+    \[f(x, y) = x^2 y + xy^2\]
+\end{enumerate}
+
+Amazingly for an ODE 
+\[P\; dx = Q\; dy = 0, \quad F = \langle P, Q \rangle\]
+the solution is just 
+\[f(x, y) = C\]
+
+Therefore, for the example above 
+\[x^2y + xy^2 = C\]
+(in implicit form)
+
+\emph{Non-exact equations:}
+Example 2: $(3xy + y^2) \; dx + (x^2 + xy) \; dy = 0$
+
+Solution:
+\[P_y = 3x + 2y\]
+\[Q_x = 2x + y\]
+So the equation is not exact!
+
+But, we can multiply the ODE by $x$ to get 
+\[(3x^2 y + xy^2) \; dx + (x^3 + x^2 y) \; dy = 0\]
+
+In practice, this integrating factor is very difficult to find (requires PDEs) so will be given in this course where necessary. 
+
+Here,
+\[P_y = 3x^2 + 2xy\]
+\[Q_x = 3x^2 + 2xy\]
+\[P_y = Q_x\]
+
+\[f_x = 3x^2 y + xy^2 \implies f = \int 3x^2 y + xy^2 \; dx = x^3 y + \frac{1}{2}x^2 y^2 + g(y)\]
+\[f_y = x^3 + x^2 y \implies f = \int x^3 + x^2 y \; dy = x^3 y + x^2 \frac{y^2}{2} + g(x)\]
+\[f(x, y) = x^3 y + \frac{1}{2}x^2 y^2\]
+
+Therefore, 
+\[\boxed{x^3 y + \frac{1}{2}x^2 y^2 = C}\]
+
+\subsection*{Lecture Sep 28: Numerical Methods I}
+\emph{Euler's Method:}
+\[y_{n + 1} \approx y_n + h f(y_n, t_n)\]
+
+Given an ODE $y' = f(y, t)$, an initial condition $(t_0, y_0)$, and a number of steps $N$, we can approximate the value of the function at a point by applying the above equation where the step size is  
+\[h = \frac{t_n - t_0}{N}\] 
+
+Example 1: Find an approximation of $y(2)$ where 
+\[\begin{cases}
+    y' = y^2 + 3t\\
+    y(0) = 2
+\end{cases}\]
+
+Solution:
+\[h = \frac{2 - 0}{2} = 1\]
+\begin{align*}
+    y_0 &= 2\\
+    y_1 &= y(0) + f'(2, 0) = 2 + 4 = 6\\
+    y_2 &= y(1) + f'(6, 1) = 6 + 39 = 45
+\end{align*}
+
+The smaller and more numerous the steps, the more accurate the approximation. 
+
+Indeed, this can be automated via Python computation. 
+
+\subsection*{Lecture Sep 30: Numerical Methods II}
+While often good for basic approximations, Euler's method has a number of drawbacks:
+\begin{enumerate}
+    \item Sensitivity to initial conditions (if there is an exponential term and an issue with rounding, the solution can explode)
+    \item Instability (you may need a very small h value to accurately plot a solution, particularly when solutions oscillate)
+\end{enumerate}
+
+Alternatives to Euler's method: 
+\begin{enumerate}
+    \item Backwards Euler:
+    \[y_{n+1} = y_n + hf(t_{n + 1}, y_{n + 1})\]
+    This is an implicit method that requires knowledge of $y_{n + 1}$
+
+    \item Multistep method 
+    \[y_{n+1} = y_n \frac{3}{2}hf(t_n, y_n) - \frac{1}{2}hf(t_{n - 1}, y_{n -1})\] 
+
+    Uses both present and past values of y
+
+    \item Runge-Kutta 
+    \[y_{n+ 1} = y_n + hf(t_n + \frac{h}{2}, \; y_n + \frac{h}{2} f(t_n, y_n))\]
+    More complicated, but evaluates f at multiple points resolving all other issues
+\end{enumerate}
+
+ODEs can also be solved symbolically in Python with the dsolve library in Sympy.
+
+\subsection*{Lecture Oct 3: Systems of ODE I}
+Many interactions between objects can be modelled as systems of ODEs which we can represent as matrix equations in the form $\vec{x}' = A\vec{x} + \vec{f}$.
+
+Example 1: 
+\[\begin{cases}
+    x_1'(t) = 7x_1(t) + 2x_2(t) + t^2\\
+    x_2'(t) = -4x_1(t) + x_2(t)
+\end{cases}\]
+\[\implies \begin{bmatrix}
+    x_1'\\
+    x_2'
+\end{bmatrix} = \begin{bmatrix}
+    7 & 2\\
+    -4 & 1
+\end{bmatrix} \begin{bmatrix}
+    x_1\\
+    x_2
+\end{bmatrix} + \begin{bmatrix}
+    t^2\\
+    0
+\end{bmatrix}\]
+
+\emph{Higher order equations:} Moreover, we can turn any higher order ODE into a system 
+
+Example 2: $y'' + 4y = 0$
+Solution:
+\[x_1(t) = y, \quad x_2(t) = y'\]
+\[\begin{cases}
+    x_1' = y' = x_2\\
+    x_2' = y'' = -4y = -4x_1
+\end{cases}\]
+\[\begin{cases}
+    x_1' = 0x_1 + x_2\\
+    x_2' = -4x_1 + 0x_2
+\end{cases}\]
+\[\vec{x}(t) = \begin{bmatrix}
+    0 & 1\\
+    -4 & 0
+\end{bmatrix} \vec{x}(t)\]
+
+\subsection*{Lecture Oct 5: Linear Algebra Review}
+If for some vector $\vec{v}$, a matrix A, and a scalar value $\lambda$, 
+\[A\vec{v} = \lambda\vec{v}\]
+then,
+$\lambda$ is an \emph{eigenvalue} of A and $\vec{v}$ is an \emph{eigenvector} of A corresponding to $\lambda$
+
+If $\vec{v}$ is an eigenvector, $A\vec{v}$ will lie in its span. 
+
+To find an eigenvalue, solve the equation
+\[\det (A - \lambda I) = 0\]
+
+To find the eigenvectors, find the nullspace of $A - \lambda I$: 
+\[(A - \lambda I)\vec{v} = \vec{0}\]
+
+\emph{Diagonalization:} a matrix A can be written in the form $A = PDP^{-1}$ where
+\[D = \begin{bmatrix}
+    \lambda_1 & 0\\
+    0 & \lambda_2
+\end{bmatrix}, \quad P = \begin{bmatrix}
+    \vec{v}_1 & \vec{v}_2
+\end{bmatrix}\]\
+
+\subsection*{Systems of ODE II}
+The solution of an equation in the form $x' = Ax$ is 
+\[x(t) = C_1 \, e^{\lambda_1 t}\; \vec{v}_{\lambda_1} + C_2 \, e^{\lambda_2 t}\; \vec{v}_{\lambda_1}\]
+
+Example 1: Solve $x' = \begin{bmatrix}
+    7 & -3\\
+    10 & -4
+\end{bmatrix}$
+
+Eigenvalues:
+\[\begin{vmatrix}
+    7 - \lambda & -3\\
+    10 & -4 - \lambda
+\end{vmatrix} = (7- \lambda)(-4-\lambda) +30 = \lambda^2 - 3\lambda + 2\]
+\[(\lambda - 2)(\lambda - 1) = 0 \implies \lambda = \{1, 2\}\]
+
+Eigenvector for $\lambda = 1$:
+\[\begin{array}{c c | c}
+    6 & -3 & 0\\
+    10 & -5 & 0
+\end{array} \implies 2x_1 - x_2 = 0\]
+\[\vec{v}_{\lambda = 1} = \begin{bmatrix}
+    1\\
+    2
+\end{bmatrix}\]
+
+Eigenvector for $\lambda = 2$:
+\[\begin{array}{c c | c}
+    5 & -3 & 0\\
+    10 & -6 & 0
+\end{array} \implies 5x_1 - 3x_2 = 0\]
+\[\vec{v}_{\lambda = 2} = \begin{bmatrix}
+    3\\
+    5
+\end{bmatrix}\]
+
+Solution:
+\[\boxed{x(t) = C_1 e^{t} \begin{bmatrix}
+    1\\2
+\end{bmatrix} + C_2 e^{2t} \begin{bmatrix}
+    3\\5
+\end{bmatrix}}\]
+
+\emph{Phase portraits:}
+To draw a phase portrait, solve the system and plot the axes determined by the eigenvectors. On each eigenvector, draw an arrow in the direction of the sign of the eigenvalue for that eigenvector (outwards if positive, inwards if negative). Then, sketch the solutions by drawing lines between the axes according to those arrows.
+
+Example 2: Draw the phase portrait for the curve 
+\[x(t) = C_1 e^{-2t} \begin{bmatrix}
+    1\\-1
+\end{bmatrix}+ C_2 e^{4t} \begin{bmatrix}
+    1\\1
+\end{bmatrix}\]
+
+Solution:
+
+\includegraphics{Images/phase portrait.png}
+
+\subsection*{Oct 12: Complex Eigenvalues}
+Remember:
+\[i = \sqrt{-1}\]
+\[e^{it} = \cos t + i \sin t\]
+
+To solve a system with complex eigenvalues, we need to find a generalized eigenvector. 
+
+Example 1: $x' = \begin{bmatrix}
+    -2 & 4\\
+    -2 & 2
+\end{bmatrix} x$
+
+Here, $\lambda = \pm 2i$
+
+Eigenvector for $\lambda = 2i$:
+\[\text{Nul}(A- (2i)I) - \begin{array}{c c | c}
+    1 + i & -2 & 0\\
+    1 & -1 + i & 0
+\end{array}\]
+Trick: because we know that $2i$ is an eigenvalue, one of the two rows has to be 0. Choose one and set the other to 0. 
+\[\implies \begin{array}{c c | c}
+    1 + i & -2 & 0\\
+    0 & 0 & 0
+\end{array} \implies (1+ i)x_1 -2x_2 = 0\]
+\[\vec{v}_{\lambda = 2i} = \begin{bmatrix}
+    2\\
+    1 + i
+\end{bmatrix}\]
+
+Because of the rules of complex conjugates, we don't need the other eigenvector!
+
+Instead, we know that 
+\[e^{(2i) t} \begin{bmatrix}
+    2\\ 1 +i
+\end{bmatrix}\]
+is a solution. As we are looking for real solutions, we can use Euler's identity:
+
+\[e^{(2i) t} \begin{bmatrix}
+    2\\ 1 +i
+\end{bmatrix} = \left(\cos(2t) + i \sin(2t)\right)\left(\begin{bmatrix}
+    2\\1
+\end{bmatrix} + i \begin{bmatrix}
+    0\\1
+\end{bmatrix}\right)\]
+\[= \left(\cos(2t) \begin{bmatrix}
+    2\\1
+\end{bmatrix} - \sin(2t) \begin{bmatrix}
+    0\\1
+\end{bmatrix}\right) + i \left(\cos (2t) \begin{bmatrix}
+    0\\1
+\end{bmatrix} + \sin(2t) \begin{bmatrix}
+    2\\1
+\end{bmatrix}\right)\]
+
+So the general solution is 
+\[\boxed{x(t) = C_1 \begin{bmatrix}
+    2\cos (2t)\\
+    \cos(2t) - \sin (2t)
+\end{bmatrix} + C_2 \begin{bmatrix}
+    2 \sin (2t)\\
+    \cos(2t) + \sin(2t)
+\end{bmatrix}}\]
+
+To draw a phase portrait, use the principal part of the eigenvector. DO NOT use the generalized eigenvector. The cos and sin terms will then create some kind of elliptical shape where the argument to the trig functions determines if the solution flows clockwise or counterclockwise. 
+
+\subsection*{Lecture Oct 14: Repeated Eigenvalues}
+In the case of a single, repeated eigenvalue, find the first eigenvector as normal and then row reduce with that value to find the general. Then, in the final solution, add a correcting factor (which will become clear after studying 2nd order ODEs).
+
+Example 1: $x' - \begin{bmatrix}
+    1 & 1\\
+    -1 & 3
+\end{bmatrix}$
+
+Eigenvalue:
+\[\begin{vmatrix}
+    1 - \lambda & 1\\
+    -1 & 3 - \lambda
+\end{vmatrix} = (1 - \lambda)(3 - \lambda) + 1 = \lambda^2 -4\lambda + 4\]
+\[(\lambda - 2)^2 = 0 \implies \lambda = 2\]
+
+Eigenvector for $\lambda = 2$:
+\[\begin{array}{c c | c}
+    -1 & 1 & 0\\
+    -1 & 1 & 0
+\end{array} \implies -x_1 + x_2 = 0\]
+\[\vec{v}_{\lambda = 2} = \begin{bmatrix}
+    1\\1
+\end{bmatrix}\]
+
+Generalized eigenvector:
+\[(A - 2I)\vec{w} = \begin{bmatrix}
+    1\\1
+\end{bmatrix}\]
+\[\begin{array}{c c |c}
+    -1 & 1 & 1\\
+    -1 & 1 & 1
+\end{array} \implies -x_1 + x_2 = 1\]
+\[y = 1 + x\]
+\[\vec{x} = \begin{bmatrix}
+    x\\
+    1 + x
+\end{bmatrix} = x \begin{bmatrix}
+    1\\1
+\end{bmatrix} + \begin{bmatrix}
+    0\\1
+\end{bmatrix}\]
+
+Solution:
+\[\boxed{x(t) = C_1 e^{2t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + C_2\left(te^{2t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + e^{2t} \begin{bmatrix}
+    0\\1
+\end{bmatrix}\right)}\]
+
+Note: you are not allowed to rescale the generalized eigenvector
+
+\emph{Plotting phase portraits:} Just like direction fields, phase portraits can be created with a helpful computer program: pplane (https://aeb019.hosted.uark.edu/pplane.html).
+
+Note: when inputting equations into pplane, all multiplications must be explicit (e.g. 3*x not 3x) and no spaces are allowed (e.g. 3+x not 3 + x)
+
+\subsection*{Oct 17: Matrix exponentials}
+Notice that equations in the form $x' = Ax$ is analgous to the elementary equation $y' = \alpha y \implies y = Ce^{\alpha t}$. 
+
+Thus, to solve a matrix equation we \emph{can} say that 
+\[x = Ce^{At} = Pe^{Dt}P^{-1} \begin{bmatrix}
+    C_1\\
+    C_2
+\end{bmatrix}\]
+by the properties of diagonal matrices. 
+
+Example 1: Solve $x' = \begin{bmatrix}
+    0 & 1\\
+    -2 & 3
+\end{bmatrix}$
+
+Eigenvalues:
+\[\begin{vmatrix}
+    -\lambda & 1\\
+    -2 & 3 - \lambda
+\end{vmatrix} = \lambda^2 - 3\lambda + 2 = 0\]
+\[(\lambda - 1)(\lambda - 2) = 0 \implies \lambda = \{1, 2\}\]
+
+Eigenvector for $\lambda = 1$:
+\[\begin{array}{c c |c}
+    -1 & 1 & 0\\
+    -2 & 2 & 0
+\end{array} \implies -x_1 + x_2 = 0\]
+\[\vec{v}_{\lambda = 1} = \begin{bmatrix}
+    1\\
+    1
+\end{bmatrix}\]
+
+Eigenvector for $\lambda = 2$:
+\[\begin{array}{c c |c}
+    -2 & 1 & 0\\
+    -2 & 1 & 0
+\end{array} \implies -2x_1 + x_1 = 0\]
+\[\vec{v}_{\lambda = 2} = \begin{bmatrix}
+    1\\
+    2
+\end{bmatrix}\]
+
+Solution:
+\[e^{At} = pe^{Dt}P^{-1}\]
+\[ = \begin{bmatrix}
+    1 & 1\\
+    1 & 2
+\end{bmatrix} \begin{bmatrix}
+    e^t & 0\\
+    0 & e^{2t}
+\end{bmatrix} \begin{bmatrix}
+    1 & 1\\
+    1 & 2
+\end{bmatrix}^{-1}\]
+\[= \begin{bmatrix}
+    2e^t - e^{2t} & -e^t + e^{2t}\\
+    2e^t - 2e^{2t} & -e^t + 2e^{2t}
+\end{bmatrix}\]
+
+\[\boxed{x(t) = C_1 \begin{bmatrix}
+    2e^t - e^{2t}\\
+    2e^t - 2e^{2t}
+\end{bmatrix} + C_2 \begin{bmatrix}
+    -e^t + e^{2t}\\
+    -e^t + 2e^{2t}
+\end{bmatrix}}\]
+
+\emph{Matrix exponentials with repeated eigenvalues:}
+For $2 \times 2$ matrices with one eigenvalue 
+\[(A - \lambda I)^2 = 0\]
+
+So, when calculating the Taylor expansion of a matrix exponentiation, all higher terms go to 0. 
+
+So, 
+\[e^{At} = e^{\lambda t}e^{(A - \lambda I) t} = e^{\lambda t} \left(I + (A - \lambda I)t\right)\]
+
+Example 2: Solve $x' = \begin{bmatrix}
+    -3 & -1\\
+    1 & -5
+\end{bmatrix}x$
+
+Eigenvalues:
+\[\begin{vmatrix}
+    -3 - \lambda & -1\\
+    1 & -5 - \lambda
+\end{vmatrix} = \lambda^2 + 8\lambda + 16\]
+\[(\lambda + 4)^2 = 0 \implies \lambda = -4\]
+
+\[e^{At} = e^{-4t}\left(\begin{bmatrix}
+    1 & 0\\
+    0 & 1
+\end{bmatrix} + t\begin{bmatrix}
+    1 & -1\\
+    1 & -1
+\end{bmatrix}\right)\]
+\[= e^{-4t} \begin{bmatrix}
+    1 + t & -t\\
+    t & 1 -t
+\end{bmatrix}\]
+
+\[\boxed{x(t) = C_1 e^{-4t} \begin{bmatrix}
+    1 + t\\
+    t
+\end{bmatrix} + C_2 e^{-4t} \begin{bmatrix}
+    -t \\
+    1- t
+\end{bmatrix}}\]
+
+\subsection*{Lecture Oct 19: Nonlinear systems}
+For a nonlinear system of interacting $x'$ and $y'$ equations, we can express the system in a form $\vec{x}'(t) = F(\vec{x}(t))$ where:
+\[\vec{x}(t) = \begin{bmatrix}
+    x(t)\\
+    y(t)
+\end{bmatrix}, \quad F(x, y) = \begin{bmatrix}
+    x'\\
+    y'
+\end{bmatrix}\]
+
+Recalling the existence-uniqueness theorem, this system will have a unique solution if F and $\nabla F$ are continuous where 
+\[\nabla F = \begin{bmatrix}
+    \frac{\partial x'}{\partial x} & \frac{\partial x'}{\partial y}\\
+    \frac{\partial y'}{\partial x} & \frac{\partial y'}{\partial y}
+\end{bmatrix}\]
+
+Example 1: Determine whether a solution exists for 
+\[\begin{cases}
+    x' = x^2 + xy + e^y\\
+    y' = \cos x + 2y
+\end{cases}\]
+
+\[F(x, y) = \begin{bmatrix}
+    x^2 + xy + e^y\\
+    \cos x + 2y
+\end{bmatrix}\]
+\[\nabla F = \begin{bmatrix}
+    2x + y & x + e^y\\
+    -\sin x & 2
+\end{bmatrix}\]
+
+All these entries are continuous so the ODE has a unique solution for $t$ close enough to 0.
+
+\emph{Classifying equilibrium solutions:}
+To classify equilibria, we need to find the linearized systems ($\vec{x}' = \nabla F(\vec{x})$) at those points. To achieve this classification, simply find the eigenvalues of the jacobian at that point.
+
+Example 2: Classify the equilibria of 
+\[\begin{cases}
+    x' = -x + xy\\
+    y' = -8y + 4xy
+\end{cases}\]
+
+Solution:
+\begin{enumerate}
+    \item Find the nullclines 
+    \[\begin{cases}
+        -x + xy = 0\\
+        -8y + 4xy = 0
+    \end{cases} \implies \begin{cases}
+        x = 0 \text{ or } y = 1\\
+        y = 0 \text{ or } x = 2
+    \end{cases} \implies (0, 0) \text{ and } (2, 1)\]
+
+    \item Find the linearization
+    \[\nabla F = \begin{bmatrix}
+        -1 + y & x\\
+        4y & -8 + 4x
+    \end{bmatrix}\]
+
+    \item Check (0, 0)
+    \[\nabla F(0, 0) = \begin{bmatrix}
+        -1 & 0\\
+        0 & -8
+    \end{bmatrix} \implies \lambda = \{-1, -8\}\] 
+    So the point (0, 0) is a sink (both are negative)
+
+    \item (This problem finished in the next section)
+\end{enumerate}
+
 \section{Lecture: Oct 21}
 \subsection*{Part I - Classifying Equilibrium Points of Nonlinear ODEs}
-Example 1: Classify the equilibrium points of 
+Example 1: Classify the equilibrium points of
 \[\begin{cases}
     x' = -x + xy\\
     y' = -8y + 4xy
@@ -269,7 +901,7 @@ Example 2: Find the equilibrium points of the model
     3 - 2x - y = 0 \implies (y = 0 \implies x = \frac{3}{2}) \\
     \text{ OR } \left(2-y-x = 0 \implies \begin{cases}
         3 - 2x - y = 0\\
-        2 - y- x = 0
+        2 - y - x = 0
     \end{cases} \implies x = 1, \quad y = 1\right) \implies \boxed{(\frac{3}{2}, 0) \quad (1, 1)}
 \end{cases}\]
 
@@ -389,10 +1021,10 @@ From all of this, we can fill in the graph from earlier and draw a few solutions
 
 Epic conclusion: the species will not go extinct! they will happily coexist and eventually reach the equilibrium (1, 1)
 
-BUT: we missed the case where there is a periodic orbit around the equiblibrium point and where the two species struggle for eternity
+BUT: we missed the case where there is a periodic orbit around the equilibrium point and where the two species struggle for eternity
 
 \subsection*{Part IV - Periodic Orbits}
-To rule out the possibility of periodic orbits, we just need to examine the behaviour of the sysytem at the axes of the equilibrium point.
+To rule out the possibility of periodic orbits, we just need to examine the behavior of the system at the axes of the equilibrium point.
 
 \begin{itemize}
     \item Case 1: $x = 1$
