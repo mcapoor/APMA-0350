@@ -462,20 +462,20 @@ Eigenvalues:
 \[(\lambda - 2)(\lambda - 1) = 0 \implies \lambda = \{1, 2\}\]
 
 Eigenvector for $\lambda = 1$:
-\[\begin{array}{c c | c}
+\[\left[\begin{array}{c c | c}
     6 & -3 & 0\\
     10 & -5 & 0
-\end{array} \implies 2x_1 - x_2 = 0\]
+\end{array} \right]\implies 2x_1 - x_2 = 0\]
 \[\vec{v}_{\lambda = 1} = \begin{bmatrix}
     1\\
     2
 \end{bmatrix}\]
 
 Eigenvector for $\lambda = 2$:
-\[\begin{array}{c c | c}
+\[\left[\begin{array}{c c | c}
     5 & -3 & 0\\
     10 & -6 & 0
-\end{array} \implies 5x_1 - 3x_2 = 0\]
+\end{array}\right] \implies 5x_1 - 3x_2 = 0\]
 \[\vec{v}_{\lambda = 2} = \begin{bmatrix}
     3\\
     5
@@ -517,15 +517,15 @@ Example 1: $x' = \begin{bmatrix}
 Here, $\lambda = \pm 2i$
 
 Eigenvector for $\lambda = 2i$:
-\[\text{Nul}(A- (2i)I) - \begin{array}{c c | c}
+\[\text{Nul}(A- (2i)I) - \left[\begin{array}{c c | c}
     1 + i & -2 & 0\\
     1 & -1 + i & 0
-\end{array}\]
+\end{array}\right]\]
 Trick: because we know that $2i$ is an eigenvalue, one of the two rows has to be 0. Choose one and set the other to 0. 
-\[\implies \begin{array}{c c | c}
+\[\implies \left[\begin{array}{c c | c}
     1 + i & -2 & 0\\
     0 & 0 & 0
-\end{array} \implies (1+ i)x_1 -2x_2 = 0\]
+\end{array}\right] \implies (1+ i)x_1 -2x_2 = 0\]
 \[\vec{v}_{\lambda = 2i} = \begin{bmatrix}
     2\\
     1 + i
@@ -570,10 +570,10 @@ To draw a phase portrait, use the principal part of the eigenvector. DO NOT use 
 \subsection*{Lecture Oct 14: Repeated Eigenvalues}
 In the case of a single, repeated eigenvalue, find the first eigenvector as normal and then row reduce with that value to find the general. Then, in the final solution, add a correcting factor (which will become clear after studying 2nd order ODEs).
 
-Example 1: $x' - \begin{bmatrix}
+Example 1: $x' = \begin{bmatrix}
     1 & 1\\
     -1 & 3
-\end{bmatrix}$
+\end{bmatrix}x$
 
 Eigenvalue:
 \[\begin{vmatrix}
@@ -583,10 +583,10 @@ Eigenvalue:
 \[(\lambda - 2)^2 = 0 \implies \lambda = 2\]
 
 Eigenvector for $\lambda = 2$:
-\[\begin{array}{c c | c}
+\[\left[\begin{array}{c c | c}
     -1 & 1 & 0\\
     -1 & 1 & 0
-\end{array} \implies -x_1 + x_2 = 0\]
+\end{array}\right] \implies -x_1 + x_2 = 0\]
 \[\vec{v}_{\lambda = 2} = \begin{bmatrix}
     1\\1
 \end{bmatrix}\]
@@ -595,10 +595,10 @@ Generalized eigenvector:
 \[(A - 2I)\vec{w} = \begin{bmatrix}
     1\\1
 \end{bmatrix}\]
-\[\begin{array}{c c |c}
+\[\left[\begin{array}{c c |c}
     -1 & 1 & 1\\
     -1 & 1 & 1
-\end{array} \implies -x_1 + x_2 = 1\]
+\end{array}\right] \implies -x_1 + x_2 = 1\]
 \[y = 1 + x\]
 \[\vec{x} = \begin{bmatrix}
     x\\
@@ -647,20 +647,20 @@ Eigenvalues:
 \[(\lambda - 1)(\lambda - 2) = 0 \implies \lambda = \{1, 2\}\]
 
 Eigenvector for $\lambda = 1$:
-\[\begin{array}{c c |c}
+\[\left[\begin{array}{c c |c}
     -1 & 1 & 0\\
     -2 & 2 & 0
-\end{array} \implies -x_1 + x_2 = 0\]
+\end{array}\right] \implies -x_1 + x_2 = 0\]
 \[\vec{v}_{\lambda = 1} = \begin{bmatrix}
     1\\
     1
 \end{bmatrix}\]
 
 Eigenvector for $\lambda = 2$:
-\[\begin{array}{c c |c}
+\[\left[\begin{array}{c c |c}
     -2 & 1 & 0\\
     -2 & 1 & 0
-\end{array} \implies -2x_1 + x_1 = 0\]
+\end{array}\right] \implies -2x_1 + x_1 = 0\]
 \[\vec{v}_{\lambda = 2} = \begin{bmatrix}
     1\\
     2
@@ -1187,4 +1187,538 @@ Solution:
 \end{bmatrix} + \sin (2t) \begin{bmatrix}
     0\\1
 \end{bmatrix}\right)\]
+
+\section{Lecture Oct 31:}
+\emph{Epidemiology:} study of infectious diseases 
+Questions to be solved with ODEs;
+\begin{itemize}
+    \item How does COVID-19 spread?
+    \item When do poutbreaks occur?
+    \item How to "flatten the curve"?
+    \item How to prevent outbreaks?
+\end{itemize}
+
+\subsection*{Part I - SIR model}
+S is "susceptible" (those exposed to COVID)
+I is "infected" (assuming that those who are infected can immediately infect others)
+R is "recovered" (assume that once recovered, cannot get it again)
+
+We choose a "compartmental model" where people transition between the three SIR states.
+
+Constant assumptions:
+\begin{itemize}
+    \item The constant rate of flow from I to R, $\gamma$
+    \item The mean residence time $1/ \gamma$ (the average time for a person to recover)
+    \item The "turnover rate" where susceptible people become infected (S to I), $\left(\frac{b}{N}\right) I$
+        where $N = S + I + R$ (the total population) and b is the number of people an infected person infects
+\end{itemize}
+
+The system:
+\[\begin{cases}
+    S'(t) = 0 - \left(\frac{b}{N}\right) SI\\
+    I'(t) = \left(\frac{b}{N}\right) SI - \gamma I\\
+    R'(t) = \gamma I
+\end{cases}\]
+
+The SI cross terms make this nonlinear. 
+
+Notice that 
+\[N' = (S + I + R)' = 0\]
+so the total population is constant. This matters because you only need to solve two of the equations to find the third ($R = N - S - I$). 
+
+Reduced model:
+\[\begin{cases}
+    S' = -\left(\frac{b}{N}\right) SI\\
+    I' = \left(\frac{b}{N}\right) SI - \gamma I
+\end{cases}\]
+
+\subsection*{Part II - Rescaling Time}
+"A day is just a social construct... more or less."
+
+To even further simplify the model, we can define a new time for which $\tau = 1 \implies t = \frac{1}{\gamma}$ so 
+\[\tau = \gamma t\]
+and define x and y to be $\frac{S}{N}$ and and $\frac{I}{N}$
+
+This gives:
+\[\begin{cases}
+    x(\tau) = \frac{S(t)}{N} = \frac{S(\tau / \gamma)}{N} \implies S(t) = Nx(\tau) = Nx(\gamma t)\\
+    y(\tau) = \frac{I(t)}{N} = \frac{I(\tau / \gamma)}{N} \implies I(t) = Nx(\tau) =  Ny(\gamma t)
+\end{cases}\]
+
+So the new model is:
+\[\begin{cases}
+    S' = (Nx(\gamma t))' = N' x(\gamma t) + N\gamma x'(\gamma t) = \gamma N x'(\tau)
+    -\frac{b}{N} SI = \frac{-b}{N}(Nx)(Ny) = -bNxy\\
+    I' = (Ny(\gamma t))' = N' y(\gamma t) + N\gamma y'(\gamma t) = \gamma N y'(\tau)\\
+    \frac{b}{N} - \gamma I = \frac{b}{N}(Nx)(Ny) - \gamma Ny = bNxy - Ny
+\end{cases}\]
+\[\implies \begin{cases}
+    x' = \left(\frac{-b}{\gamma}\right)xy\\
+    y' = \left(\frac{b}{\gamma}\right)xy - y\\
+\end{cases}\]
+
+We then define $R_0 = b / \gamma$ as the total number of people a sick person ingects
+
+So, at long last, 
+\[\boxed{\begin{cases}
+    x' = -R_0 xy\\
+    y' = R_0 xy - y
+\end{cases}}\]
+
+\subsection{Lecture Nov 2}
+\subsection*{Part I - Recap SIR Model}
+After making some simplifications and several changes of variable, we have the model
+
+\[\begin{cases}
+    x' = -R_0 xy\\
+    y' = R_0 xy - y
+\end{cases}\]
+Where x is the fraction of sus people, y is fraction of infected people, $R_0$ is number of people a sick person infects while sick
+
+\subsection*{Part II - Equilibrium points ($x' = 0, y' = 0)$}
+\[\begin{cases}
+    -R_0 xy = 0\\
+    R_0 xy - y = 0
+\end{cases} = \begin{cases}
+    xy = 0\\
+    y(R_0 x - 1) = 0
+\end{cases} \implies \begin{cases}
+    x = 0 \; \text{ OR } \; y = 0\\
+    \text{ if } x = 0 \implies y = 0\\
+    \text{ if } y = 0 \implies 0 (R_0 x - 1) = 0 
+\end{cases}\]
+
+This second equation implies that there are infinitely many equilibria of the form $(x, 0)$
+
+Interpretation: our equilibrium solution is the point where no one is infected 
+
+\subsection*{Part III - Classification}
+\[\nabla F(x, y) = \begin{bmatrix}
+    -R_0 y & -R_0 x\\
+    R_0 y & R_0 x - 1
+\end{bmatrix}\]
+\[\nabla F(x, 0) = \begin{bmatrix}
+    0 & -R_0 x\\
+    0 & R_0 x - 1
+\end{bmatrix}\]
+
+This is upper triangular so the eigenvalues are $\lambda = 0$ (neutral) and $\lambda = R_0 x - 1$ (sometimes positive and negative)
+
+From the eigenvalue:
+\[\lambda = R_0 x - 1 \implies x = \frac{1}{R_0}\]
+\[\begin{cases}
+    \lambda < 0 \quad x < \frac{1}{R_0}\\
+    \lambda > 0 \quad x > \frac{1}{R_0}
+\end{cases}\]
+
+Conclusion:
+\[(x, 0) \; \text{ is } \; \begin{cases}
+    \text{Stable} \quad x < \frac{1}{R_0}\\
+    \text{Unstable} \quad x > \frac{1}{R_0}
+\end{cases}\]
+
+\subsection*{Part IV - The Good Case ($R_0 < 1$)}
+If $R_0 < 1 \implies 1/R_0 > 1$
+However, because x and y are defined as fractions of the population, we will never reach that point so all equilibrium solutions will be stable. 
+In other words, no matter what, the number of infected people will eventually go to 0
+
+\includegraphics{Images/sir stability.png}
+
+\subsection*{Part V - The Bad Case ($R_0 > 1$)}
+On the right hand side of $1/R_0$, all equilibrium solutions are unstable while on the left they are stable so we get outbreaks!
+
+\includegraphics{Images/sir outbreak.png}
+
+This makes sense because $R_0$ is the number of people a sick person infects. If this is high, a sick person infects many people which causes an exponential infection tree leading to a pandemic.
+
+To find the arrows on the phase portrait, we just see that
+\[\begin{cases}
+    x' = -R_0 xy < 0 \implies  \text{arrows go left}\\
+    y' = y(R_0 x - 1) \implies \text{positive when right of $1/R_0$, negative otherwise}
+\end{cases}\]
+
+\subsection*{Part VI - Vaccines}
+Definition: $z = \frac{R}{N}$,  the fraction of recovered/vaccinated people 
+
+Notice that $x + y + z = 1$ 
+If $z > 1 - \frac{1}{R_0}$ then $x < \frac{1}{R_0}$ and no outbreaks!
+"If enough people are vaccinated, then there will be no outbreak"
+
+\subsection*{Part VII - Real COVID Data (Spring 2020)}
+NYT says $R_0 \approx 3.8$ 
+so 
+\[1 - \frac{1}{R_0} \approx 0.74\]
+Therefore, in order to control COVID, 74\% of the population needs to be vaccinated. 
+
+According to Google, 68\% of people are currently vaccinated
+
+\section{Lecture Nov 4: 2nd Order ODEs}
+\subsection*{Part I - Existence and Uniqueness}
+Example 1:
+\[\begin{cases}
+    y'' = 2y' + t(y^2)\\
+    y(0) = 2\\
+    y'(0) = 3
+\end{cases}\]
+
+\emph{Existence and Uniqueness for 2nd Order:} Given $y_0$ and $v_0$, for 
+\[\begin{cases}
+    y'' = f(y, y', t)\\
+    y(0) = y_0\\
+    y'(0) = v_0
+\end{cases}\]
+If f and its partial derivatives are continuous, there is a unique solution $y = y(t)$ near 0
+
+\subsection*{Part II - Model Problem}
+Example 2: 
+Solve $y'' - 5y' + 6y = 0$
+
+Recall: $y' = ry \implies y = Ce^{rt}$
+
+Plug in $e^{rt}$:
+\[(e^{rt})'' - 5(e^{rt})' = 6(e^{rt}) = 0\]
+\[r^2e^{rt} - 5re^{rt} + 6e^{rt} = 0\]
+\[(r^2 - 5 + 6) e^{rt} = 0\]
+\[(r - 3)(r - 2) = 0 \implies r = \{3, \; 2\}\]
+So, $e^{2t}$ and $e^{3t}$ are solutions
+
+In this case, $r^2 - 5r + 6 = 0$ is the \emph{auxiliary equation}
+
+General Solution:
+\[y = Ae^{2t} + Be^{3t}\]
+
+Why does this work?
+\begin{itemize}
+    \item From $r = \{2, \; 3\}$ we know that $e^{2t}$ and $e^{3t}$ are solutions
+    \item A constant times a solution is still a solution
+    \item So $Ae^{2t}$ and $Be^{3t}$ are also solutions 
+    \item The sum of solutions is still a solution (the solution space is the span of the basis vectors $e^{2t}$ and $e^{3t}$)
+    \item Using $y(0)$ and $y'(0)$, you can solve for A and B
+    \item By uniqueness, $y = Ae^{2t} + Be^{3t}$
+\end{itemize}
+
+\subsection*{Part III - Examples}
+Example 3: $y'' + 5y' + 4y = 0$
+
+Solution:
+We can go directly to the auxiliary equation
+\[r^2 + 5r + 4 = 0\]
+\[(r + 4)(r + 1) = 0 \implies 4 = \{-4, \; -1\}\]
+\[\boxed{y} = Ae^{-t} + Be^{-4t}\]
+
+Example 4: $4y'' = 8y' - 3y$
+
+Solution:
+\[4r^2 - 8r + 3 = 0\]
+\[(2r - 3)(2r - 1) = 0 \implies r = \{\frac{3}{2}, \; \frac{1}{2}\}\]
+
+\[\boxed{y = Ae^{3t/2} + Be^{t/2}}\]
+
+Example 5:
+\[\begin{cases}
+    y'' + y' - 6y = 0\\
+    y(0) = 2\\
+    y'(0) = -1
+\end{cases}\]
+
+Solution:
+\[r^2 + r - 6 = 0\]
+\[(r + 3)(r - 2) = 0 \implies r = \{-3, \; 2\}\]
+\[y = Ae^{-3t} + Be^{2t}\]
+
+\[y(0) = 2 \implies A + B = 2\]
+\[y' = -3Ae^{-3t} + 2Be^{2t}\]
+\[y'(0) = -1 \implies -3A + 2B = -1\]
+\[\begin{cases}
+    A + B = 2\\
+    -3A + 2B = -1
+\end{cases} \implies -3A + 2(2 - A) = -1\]
+\[-5A = -5 \implies A = 1, \; B = 1\]
+\boxed{y = e^{-3t} + e^{2t}}
+
+
+Example 6: When does this attain a min?
+\[y = e^{-3t} + e^{2t}\]
+
+Solution:
+Set $y' = 0$:
+\[(e^{-3t} + e^{2t})' = 0\]
+\[-3e^{-3t} + 2e^{2t} = 0 \implies 2e^{2t} = 3e^{3t}\]
+\[e^{5t} = \frac{3}{2}\]
+\[t = \frac{1}{5} \ln \frac{3}{2} \approx 0.081\]
+
+(Then technically you should also check the 2nd derivative)
+
+Example 7: $y''' - 6y'' + 11y' - 6y = 0$
+
+Solution:
+\[r^3 - 6r^2 + 11r - 6 = 0\] 
+\[(r - 1)(r - 2)(r - 3) = 0\]
+\[r = \{1,\; 2,\; 3\}\]
+\boxed{y = Ae^{t} + Be^{2t} + Ce^{3t}}
+
+\section{Lecture Nov 7:}
+\subsection*{Part I - Complex roots}
+Example 1: $y'' + y = 0$
+
+Solution:
+\[r^2 + 1 = 0 \implies r = \pm i \]
+
+From "our buddy" Euler:
+\[y = Ce^{it} = \cos t + i \sin t\]
+
+So, 
+\[y = A\cos t + B \sin t\]
+
+Example 2: 
+\[\begin{cases}
+    y'' + 4y = 0\\
+    y(0) = 3\\
+    y'(0) = 4
+\end{cases}\]
+
+Solution:
+\[r^2 + 4 = 0 \implies r^2 = -4 \implies r = \pm 2i\]
+\[y = A\cos(2t) + B\sin (2t)\]
+\[y(0) = A  = 3\]
+\[y'(0) = -2A \sin(2(0)) + 2B\cos (2(0)) = 2B = -4 \implies B = -2\]
+\boxed{y = 3\sin(2t) -2 \cos(2t)}
+
+Example 3: $y'' - 4y' + 13y = 0$
+\[r^2 - 4r + 13 = 0\]
+\[r = \frac{4 \pm \sqrt{16 - 4(13)}}{2} = 2\pm 3i\]
+\[y = e^{2t} (A\cos(3t) + B\sin(3t))\] 
+\boxed{y = Ae^{2t} \cos (3t) + Be^{2t} \sin (3t)}
+
+\subsection*{Part II - Repeated roots}
+Example 4: $y'' - 4y' + 4y = 0$
+\[(r - 2)^2 = 0 \implies r = 2 \text{ (repeated)}\]
+
+FACT: $y = Ae^{2t} + Bte^{2t}$
+
+\emph{Why this is true:} 
+\[\left(e^{-2t} y\right)'' = 0\]
+\[\left(e^{-2t} y \right)' = B\]
+\[e^{-2t} y = Bt + A\]
+\[y = Ae^{2t} + Bte^{2t}\]
+
+\section{Lecture 9 November:}
+\subsection*{Part I - Boundary Value Problems}
+Example 1: Find the value of $\lambda$ for which the following has a zonzero solution:
+\[\begin{cases}
+    y'' = \lambda y\\
+    y(0) = 0\\
+    y(\pi) = 0
+\end{cases}\]
+
+Solution:
+\[r^2 = \lambda\]
+
+Case 1 $\lambda > 1$: Then $\lambda = \omega^2$ for some $\omega > 0$
+Then, the auxiliary equation is 
+\[r^2 = \omega^2 \implies r = \pm \omega\]
+\[y = Ae^{\omega t} + Be^{-\omega t}\]
+\[y(0) = A + B = 0 \implies B = - A\]
+\[y(\pi) = Ae^{\omega \pi} - Ae^{-\omega \pi} \implies Ae^{\omega \pi} = A e^{-\omega \pi}\]
+$A \neq 0$ because we are looking for nonzero solutions so 
+\[e^{\omega \pi} = e^{-\omega \pi}\]
+\[\omega = 0 \implies \lambda = 0\]
+So, there are no nonnegative solutions here!
+
+Case 2: $\lambda = 0$: 
+Aux: 
+\[r^2 = 0 \implies r = 0\]
+\[y = A + Bt\]
+\[y(0) = A = 0\]
+\[y(\pi) = B\pi = 0 \implies B = 0\]
+\[y = 0\]
+So no nonzero solutions here either!
+
+Case 3: $\lambda < 0$
+Then 
+\[\lambda = -\omega^2 \quad (\omega > 0)\]
+Aux:
+\[r^2 = \lambda = -\omega^2 \implies r = \pm \omega i\]
+\[y = A\cos (\omega t) + B \sin (\omega t)\]
+\[y(0) = A = 0\]
+\[y = B\sin (\omega t)\]
+\[y(\pi) = B\sin (\omega \pi) = 0\]
+B cannot be zero (or it would be the zero solution yet again)
+\[\sin (\omega \pi) = 0\]
+\[\omega \pi = \pi m\]
+\[\omega = m\]
+Where m is any positive integer so:
+\[\begin{cases}
+    \lambda = -\omega^2 = -m^2\\
+    y = B \sin (\omega t) = B \sin(m t)
+\end{cases}\]
+
+Epic conclusion:
+\begin{enumerate}
+    \item Eigenvalues are $\lambda = -m^2, \quad m \in \mathbb{Z}^+$
+    \item Eigenfunctions: $y = \sin (mt)$ (this is the basis for the solution space)
+\end{enumerate}
+
+\subsection*{Part II - Derivative Example}
+Example 2: Find the eigenvalues/functions of 
+\[\begin{cases}
+    y'' = \lambda\\
+    y'(0) = 0\\
+    y'(1) = 0
+\end{cases}\] 
+
+Auxiliary equation:
+\[r^2 = \lambda\]
+
+Case 1: $\lambda > 1$
+\[r^2 = \lambda = \omega^2 \implies r = \pm \omega\]
+\[y = Ae^{\omega t} + Be^{-\omega t}\]
+\[y' = A\omega e^{\omega t} -B\omega e^{-\omega t} \]
+\[y'(0) = A\omega -B\omega\]
+$\omega$ is positive so we can cancel it and we have $A= B$
+\[y'(1) = A\omega e^\omega - A\omega e^{-\omega} = 0 \implies \omega = -\omega \implies \omega = 0\]
+This is a contradiction so there are no nonzero solutions
+
+Case 2: $\lambda = 0$
+\[r^2 = 0 \implies r = 0\]
+\[y = A + Bt\]
+\[y' = B\]
+\[y'(0) = 0 \implies B = 0\]
+\[y = A\]
+\[y' = 0\]
+So $\lambda = 0$ is an eigenvalue with eigenfunction $y = A$ 
+
+Case 3: $\lambda < 0$
+\[\lambda = -\omega^2 \quad (\omega > 0)\]
+\[r^2 = \lambda \implies r = \pm \omega i\]
+\[y = A \cos (\omega t) + B \sin (\omega t)\]
+\[y' = -A \omega \sin (\omega t) + B \omega \cos (\omega t) \]
+\[y'(0) = B \omega = 0 \implies B = 0\]
+\[y = A \cos (\omega t)\]
+\[y'(1) = -A\omega \sin (\omega) = 0\]
+\[\sin (\omega) = 0 \implies \omega = \pi m \]
+
+So the eigenvalues are $\lambda = -(\pi m)^2 \quad m \in \mathbb{Z}^+_0$ for the eigenfunctions $y = \cos (\pi m t) \quad m \in \mathbb{Z}^+$
+
+\section{Lecture: Nov 11}
+\subsection*{Part I - Inhomogeneous Equations}
+Example 1: $y'' - 5y' + 6y = e^t$
+
+Solution:
+\begin{enumerate}
+    \item Homogeneous solution (solve $y'' - 5y' + 6y = 0$)
+    \[r^2 - 5r + 6 = (r - 3)(r - 2) = 0 \implies y_0 = Ae^{3t} + Be^{2t}\]
+    \item Particular solution (find \emph{one} solution to $y'' - 5y' + 6y = e^t$)
+    \[y_p(t) = \frac{1}{2}e^t\]
+    \item Final answer:
+    \[y = y_0 + y_p\]
+    So, 
+    \[y = Ae^{3t} + Be^{2t} + \frac{1}{2}e^t\]
+\end{enumerate}
+
+Why this works:
+$y - y_p$ solves $y'' - 5y' + 6y =9 \implies y- y_0 = y_0$
+
+\subsection*{Part II - Undetermined coefficients}
+Example: Find a particular solution $y_p$ of $y'' - 5y' + 6y = e^t$
+
+Some heuristic solutions:
+\begin{itemize}
+    \item If RHS is $e^{rt}$, guess $y_p = Ae^{rt}$
+    \item IF RHS is a polynomial, guess $y_p$ to be the most general polynomial of the same degree 
+    (e.g. $t^2 \longrightarrow At^2 + Bt + C$)
+    \item $\cos$ always goes with $\sin$
+    (e.g. $\cos(\alpha t) \longrightarrow A\cos(\alpha t) + B\sin(\alpha t)$)
+\end{itemize}
+
+In the above problem,
+\[(Ae^t)'' - 5(Ae^t)' + 6Ae^= e^t\]
+\[Ae^t - 5Ae^t + 6Ae^t = e^t \implies 2Ae^2 = e^t\]
+\[A = \frac{1}{2}\]
+So, 
+\[y_p = \frac{1}{2}e^t\]
+
+Example 3 (Rule 2 above):
+Find the general solution of $y'' - 2y' - 3y = 9t^2$
+
+Homogeneous Solution:
+\[r^2 - 2r - 3 = 0 = (r - 3)(r + 1) \implies y = Ae^t + Be^{3t}\]
+
+Particular solution:
+\[\text{RHS} = 9t^2\] 
+\[y_p = At^2 + Bt + C\]
+\[(At^2 + Bt + C)'' - 2(At^2 + Bt + C)' - 3(At^2 + Bt + C) = 9t\]
+\[2A - 2(2At + B) - 3(At^2 + Bt + C) = 9t^2\]
+\[2A - 4At - 2B - 3At^2 - 3Bt -3C = 9t^2\]
+\[-3At^2 + (-4A - 3B)t + (2A - 2B - 3C) = 9t^2\]
+\[\begin{cases}
+    -3A = 9 \implies A = -3\\
+    -4A - 3B = 0 = -4(-3) - 3B = 0 \implies B = 4\\
+    2A - 2B - 3C = 0 = 2(-3) - 2(4) - 3C = 0 \implies C = -14/3
+\end{cases}\]
+\[y_p = -3t^2 + 4t - \frac{14}{3}\]
+
+General solution:
+\[y = y_0 + y_p = \boxed{Ae^{3t} + Be^{-t} - 3t^2 + 4t - \frac{14}{3}}\]
+
+Example 4 (rule 3 above):
+\[\begin{cases}
+    y'' - y' = \cos (2t)\\
+    y(0) = 2 \quad y'(0) = -1
+\end{cases}\]
+
+Homogeneous:
+\[r^2 - r = 0 \implies y = A + Be^t\]
+
+Particular:
+\[\text{RHS} = \cos (2t)\]
+\[y_p = A\cos(2t) + B\sin(2t)\]
+\[(A\cos(2t) + B\sin(2t))'' - (A\cos(2t) + B\sin(2t))' = \cos (2t)\]
+\[-4A\cos(2t) -4B\sin(2t) + 2A\sin(2t) - 2B\cos (2t) = \cos (2t)\]
+\[(-4A - 2B)\cos(2t) + (-4B + 2A)\sin(2t) = 1\cos(2t) + 0\sin(2t)\]
+\[\begin{cases}
+    -4A - 2B = 1\\
+    2A - 4B = 0\end{cases} \implies A = -\frac{1}{5}\quad B = -\frac{1}{10}\]
+\[y_p = -\frac{1}{5}\cos(2t) - \frac{1}{10}\sin (2t)\]
+
+General solution:
+\[y = A + Be^t - \frac{1}{5} \cos (2t) - \frac{1}{10} \sin (2t)\]
+
+Initial conditions:
+\[A + B - \frac{1}{5} = 2\]
+\[y' = Be^t + \frac{2}{5}\sin (2t) - \frac{1}{5}\cos (2t)\]
+\[B - \frac{1}{5} = -1 \implies B = -\frac{4}{5} \implies A = 3\]
+\[\boxed{y} = 3 - \frac{4}{5}e^t - \frac{1}{5} \cos (2t) - \frac{1}{10}\sin(2t)\]
+
+\subsection*{Part III - Resonance}
+Example 5: $y'' - 5y' + 6y - e^{2t}$
+
+Homogeneous solution:
+\[r^2 - 5r + 6 = 0 \implies y_0 = Ae^{2t} + Be^{3t} \]
+
+Particular solution:
+Naively, $y_p = Ae^{2t}$
+But!
+\[(Ae^{2t})'' - 5(Ae^{2t})' + 6(Ae^{2t}) = 4Ae^{2t} - 10Ae^{2t} + 6Ae^{2t} = 0 \neq e^{2t}\]
+Because this guess is already part of the homogeneous solution, we need a new particular solution!
+
+In other words, if the root of the particular solution coincides with the homogenous solution, we add a resonance term:
+\[y_p = Ate^{2t}\]
+
+\[(Ate^{2t})'' - 5(Ate^{2t})' + 6(Ate^{2t}) = e^{2t} \implies A = -1\]
+\[y_p = -te^{2t}\]
+\[\boxed{y = Ae^{2t} + Be^{3t} - te^{2t}}\]
+
+Example 6: Guess the form of $y_p$
+\begin{enumerate}
+    \item $y'' + 3y' - 4y = e^{2t}$
+    Aux $r^2 + 3r - 4 = 0 \implies r = \{1, \; -4\}$ but $e^{2t} \implies r = 2$ so the roots do not coincide, and there is no resonance
+    \boxed{y_p = Ae^{2t}}
+    \item $y'' + 3y' - 4y = e^{t}$
+    $e^{t} \implies r = 1$ which corresponds to the root of the aux equation so 
+    \boxed{y_p = Ate^t}
+    \item $y'' - 3y' -4y = t^2 e^{-4t}$
+    $t^2 e^{-4t} \implies r = -4$ so there is still resonance and 
+    \boxed{y_p = t(At^3 + Bt^2 + Ct + D) e^{-4t}}
+\end{enumerate}
 \end{document} 
