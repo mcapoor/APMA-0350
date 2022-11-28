@@ -28,6 +28,9 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{empheq}
+
+\renewcommand{\L}[1]{\mathcal{L}\{#1\}}
 
 \title{APMA 0350: Applied Ordinary Differential Equations}
 \author{Milan Capoor}
@@ -133,13 +136,12 @@ Classifications of ODEs (from easiest to hardest):
     \item $y'' + 5y' + 6y = 3$
 \end{enumerate}
 
-\section{A summary of the first half of the course, the notes for which were lost:}
-\subsection*{Lecture Sep 9: Direction Fields}
+\section{Lecture Sep 9: Direction Fields}
 
 \emph{Direction field:} A way of qualitatively studying the behaviour of an ODE by plotting the tangent lines at each point. When you draw a line through a point, following the slope arrows, you create a plot of the ODE's solution with that point as the initial condition
 - Can be generated with the dfield app (https://aeb019.hosted.uark.edu/dfield.html)
 
-\subsection*{Lecture Sep 12: Qualitative methods}
+\section{Lecture Sep 12: Qualitative methods}
 
 \emph{Autonomous ODE:} the right-hand-side doesn't depend on t
 Special case: Logistic equation $y = \alpha y (1 - \frac{y}{\beta})$
@@ -163,7 +165,7 @@ Classifying solutions:
     \item If the solutions approach from one side and are repelled from the other, it is \emph{bistable}
 \end{itemize}
 
-\subsection*{Lecture Sep 14: Existence and uniqueness}
+\section{Lecture Sep 14: Existence and uniqueness}
 \emph{Existence and Uniqueness Theorem:}
 Given $(t_0, y_0)$, consider the ODE 
 \[\begin{cases}
@@ -178,7 +180,7 @@ Notes:
     \item If you only want \emph{existence}, it is enough to assume that $f$ is continuous (you don't need the partial derivative!) 
 \end{itemize}
 
-\subsection*{Lecture Sep 16: Separable Equations}
+\section{Lecture Sep 16: Separable Equations}
 \emph{Separable equation:} an equation in the form 
 \[y' = \frac{f(t)}{g(y)}\]
 
@@ -229,7 +231,7 @@ Going back to the problem above:
 \[y(1 + Ce^{3t}) = 20Ce^{3t}\]
 \[\boxed{y = \frac{20Ce^{3t}}{1 + Ce^{3t}}}\]
 
-\subsection*{Lecture Sep 19: Integrating Factors}
+\section{Lecture Sep 19: Integrating Factors}
 To solve equations in the form
 \[y' + \alpha y = f(t)\]
 multiply by $e^{at}$
@@ -266,7 +268,7 @@ Solution:
 \[ye^{t^3} = \int 2e^u \; du = 2e^u + C = 2e^{t^3} + C\]
 \[y = 2 + Ce^{-t^3}\]
 
-\subsection*{Lecture Sep 21: Exact Equations}
+\section{Lecture Sep 21: Exact Equations}
 \emph{Exact equation:} equation in the form 
 \[P(x, y) \; dx + Q(x, y) \; dy\]
 
@@ -333,7 +335,7 @@ Here,
 Therefore, 
 \[\boxed{x^3 y + \frac{1}{2}x^2 y^2 = C}\]
 
-\subsection*{Lecture Sep 28: Numerical Methods I}
+\section{Lecture Sep 28: Numerical Methods I}
 \emph{Euler's Method:}
 \[y_{n + 1} \approx y_n + h f(y_n, t_n)\]
 
@@ -358,7 +360,7 @@ The smaller and more numerous the steps, the more accurate the approximation.
 
 Indeed, this can be automated via Python computation. 
 
-\subsection*{Lecture Sep 30: Numerical Methods II}
+\section{Lecture Sep 30: Numerical Methods II}
 While often good for basic approximations, Euler's method has a number of drawbacks:
 \begin{enumerate}
     \item Sensitivity to initial conditions (if there is an exponential term and an issue with rounding, the solution can explode)
@@ -383,7 +385,7 @@ Alternatives to Euler's method:
 
 ODEs can also be solved symbolically in Python with the dsolve library in Sympy.
 
-\subsection*{Lecture Oct 3: Systems of ODE I}
+\section{Lecture Oct 3: Systems of ODE I}
 Many interactions between objects can be modelled as systems of ODEs which we can represent as matrix equations in the form $\vec{x}' = A\vec{x} + \vec{f}$.
 
 Example 1: 
@@ -423,7 +425,7 @@ Solution:
     -4 & 0
 \end{bmatrix} \vec{x}(t)\]
 
-\subsection*{Lecture Oct 5: Linear Algebra Review}
+\section{Lecture Oct 5: Linear Algebra Review}
 If for some vector $\vec{v}$, a matrix A, and a scalar value $\lambda$, 
 \[A\vec{v} = \lambda\vec{v}\]
 then,
@@ -445,7 +447,7 @@ To find the eigenvectors, find the nullspace of $A - \lambda I$:
     \vec{v}_1 & \vec{v}_2
 \end{bmatrix}\]\
 
-\subsection*{Systems of ODE II}
+\section{Systems of ODE II}
 The solution of an equation in the form $x' = Ax$ is 
 \[x(t) = C_1 \, e^{\lambda_1 t}\; \vec{v}_{\lambda_1} + C_2 \, e^{\lambda_2 t}\; \vec{v}_{\lambda_1}\]
 
@@ -502,7 +504,7 @@ Solution:
 
 \includegraphics{Images/phase portrait.png}
 
-\subsection*{Oct 12: Complex Eigenvalues}
+\section{Oct 12: Complex Eigenvalues}
 Remember:
 \[i = \sqrt{-1}\]
 \[e^{it} = \cos t + i \sin t\]
@@ -567,7 +569,7 @@ So the general solution is
 
 To draw a phase portrait, use the principal part of the eigenvector. DO NOT use the generalized eigenvector. The cos and sin terms will then create some kind of elliptical shape where the argument to the trig functions determines if the solution flows clockwise or counterclockwise. 
 
-\subsection*{Lecture Oct 14: Repeated Eigenvalues}
+\section{Lecture Oct 14: Repeated Eigenvalues}
 In the case of a single, repeated eigenvalue, find the first eigenvector as normal and then row reduce with that value to find the general. Then, in the final solution, add a correcting factor (which will become clear after studying 2nd order ODEs).
 
 Example 1: $x' = \begin{bmatrix}
@@ -624,7 +626,7 @@ Note: you are not allowed to rescale the generalized eigenvector
 
 Note: when inputting equations into pplane, all multiplications must be explicit (e.g. 3*x not 3x) and no spaces are allowed (e.g. 3+x not 3 + x)
 
-\subsection*{Oct 17: Matrix exponentials}
+\section{Oct 17: Matrix exponentials}
 Notice that equations in the form $x' = Ax$ is analgous to the elementary equation $y' = \alpha y \implies y = Ce^{\alpha t}$. 
 
 Thus, to solve a matrix equation we \emph{can} say that 
@@ -732,7 +734,7 @@ Eigenvalues:
     1- t
 \end{bmatrix}}\]
 
-\subsection*{Lecture Oct 19: Nonlinear systems}
+\section{Lecture Oct 19: Nonlinear systems}
 For a nonlinear system of interacting $x'$ and $y'$ equations, we can express the system in a form $\vec{x}'(t) = F(\vec{x}(t))$ where:
 \[\vec{x}(t) = \begin{bmatrix}
     x(t)\\
@@ -801,7 +803,7 @@ Solution:
     \item (This problem finished in the next section)
 \end{enumerate}
 
-\section{Lecture: Oct 21}
+\section{Lecture Oct 21: Ecology - Competing Species (I)}
 \subsection*{Part I - Classifying Equilibrium Points of Nonlinear ODEs}
 Example 1: Classify the equilibrium points of
 \[\begin{cases}
@@ -938,7 +940,7 @@ Thus,
     \end{bmatrix} \implies \lambda = \{-3, \frac{1}{2}\} \implies $ the system is also a saddle so the bunnies survive
 \end{enumerate}
 
-\section{Lecture: Oct 24}
+\section{Lecture Oct 24: Ecology - Competing Species (II)}
 \subsection*{Part I - Rabbits and Sheep Model Recap}
 Our model, where x is the population of rabbits and y is the population of sheep:
 \[\begin{cases}
@@ -1045,7 +1047,7 @@ To rule out the possibility of periodic orbits, we just need to examine the beha
 
 Completing the picture, we see that no periodic orbit is possible!
 
-\section{Lecture: Oct 26}
+\section{Lecture Oct 26: Midterm Review}
 \subsection*{Part I - Chemical Tanks}
 Assume there are three chemical tanks in series.
 \begin{itemize}
@@ -1188,7 +1190,7 @@ Solution:
     0\\1
 \end{bmatrix}\right)\]
 
-\section{Lecture Oct 31:}
+\section{Lecture Oct 31: Epidemiology - SIR Models (I)}
 \emph{Epidemiology:} study of infectious diseases 
 Questions to be solved with ODEs;
 \begin{itemize}
@@ -1265,7 +1267,7 @@ So, at long last,
     y' = R_0 xy - y
 \end{cases}}\]
 
-\subsection{Lecture Nov 2}
+\subsection{Lecture Nov 2:  Epidemiology - SIR Models (II)}
 \subsection*{Part I - Recap SIR Model}
 After making some simplifications and several changes of variable, we have the model
 
@@ -1352,7 +1354,7 @@ Therefore, in order to control COVID, 74\% of the population needs to be vaccina
 
 According to Google, 68\% of people are currently vaccinated
 
-\section{Lecture Nov 4: 2nd Order ODEs}
+\section{Lecture Nov 4: 2nd Order ODEs (I)}
 \subsection*{Part I - Existence and Uniqueness}
 Example 1:
 \[\begin{cases}
@@ -1457,7 +1459,7 @@ Solution:
 \[r = \{1,\; 2,\; 3\}\]
 \boxed{y = Ae^{t} + Be^{2t} + Ce^{3t}}
 
-\section{Lecture Nov 7:}
+\section{Lecture Nov 7: 2nd Order ODEs (II)}
 \subsection*{Part I - Complex roots}
 Example 1: $y'' + y = 0$
 
@@ -1502,7 +1504,7 @@ FACT: $y = Ae^{2t} + Bte^{2t}$
 \[e^{-2t} y = Bt + A\]
 \[y = Ae^{2t} + Bte^{2t}\]
 
-\section{Lecture 9 November:}
+\section{Lecture 9 November: Boundary Value Problems}
 \subsection*{Part I - Boundary Value Problems}
 Example 1: Find the value of $\lambda$ for which the following has a zonzero solution:
 \[\begin{cases}
@@ -1600,7 +1602,7 @@ Case 3: $\lambda < 0$
 
 So the eigenvalues are $\lambda = -(\pi m)^2 \quad m \in \mathbb{Z}^+_0$ for the eigenfunctions $y = \cos (\pi m t) \quad m \in \mathbb{Z}^+$
 
-\section{Lecture: Nov 11}
+\section{Lecture Nov 11: Undetermined Coefficients}
 \subsection*{Part I - Inhomogeneous Equations}
 Example 1: $y'' - 5y' + 6y = e^t$
 
@@ -1721,4 +1723,933 @@ Example 6: Guess the form of $y_p$
     $t^2 e^{-4t} \implies r = -4$ so there is still resonance and 
     \boxed{y_p = t(At^3 + Bt^2 + Ct + D) e^{-4t}}
 \end{enumerate}
-\end{document} 
+
+\section{Lecture Nov 14: Mechanical Vibrations}
+\subsection*{Part I - Masses and Springs}
+Image a mass suspended below a spring where $y(t)$ is the displacement from the equilibrium position
+
+\[my'' + \gamma y' + Ky = F\]
+Where:
+\begin{itemize}
+    \item M is mass
+    \item $\gamma$ is a damping constant (friction)
+    \item K is a spring constant 
+    \item F is the external force
+\end{itemize}
+
+Notes on the derivation:
+\begin{itemize}
+    \item $my''$ comes from $F = ma$
+    \item $\gamma y'$ is the damping force and also comes from Newton
+    \item $Ky$ comes from Hooke's law 
+    \item F is just external forces
+\end{itemize}
+
+\subsection*{Part II - Free vibrations}
+Example 1:
+\[\begin{cases}
+    2y'' + 18y = 0\\
+    y(0) = 2\\
+    y'(0) = 6\sqrt{3}\\
+    \gamma = 0, \quad F = 0
+\end{cases}\]
+
+\begin{enumerate}
+    \item Aux: $2r^2 + 18 = 0 \implies r = \pm 3i$
+    \item $y = A\cos(3t) + B\sin(3t)$
+    \item $A = 2 \quad B = 2\sqrt{3}$
+    \item $\boxed{y = 2\cos(3t) + 2\sqrt{3} \sin (3t)}$
+\end{enumerate}
+This looks like a sine wave with frequency $\omega = 3$, period $T = \frac{2\pi}{3}$, amplitude $R = \sqrt{A^2 + B^2} = 4$, phase shift $\delta = \tan^{-1} \left(\frac{B}{A}\right) = \frac{\pi}{3}$
+From precalc,
+\[y = R\cos(\omega t - \delta) = 4\cos(3t - \frac{\pi}{3})\]
+
+\subsection*{Part III - Damping}
+Example 2:
+\[\begin{cases}
+    9y'' + 6y' + 37y = 0\\
+    y(0) = 4\\
+    y'(0) = -2
+\end{cases}\]
+
+Solution:
+\[9r^2 + 6r + 37 = 0\]
+\[r = \frac{-6 \pm \sqrt{-1296}}{18} = -\frac{1}{3} \pm 2i\]
+\[y = Ae^{-t/3}\cos(2t)+ Be^{-t/3} \sin(2t)\]
+\[A = 4 \quad B = -\frac{1}{3}\]
+\[y = 4e^{-t/3}\cos(2t)- \frac{1}{3} e^{-t/3} \sin(2t)\]
+
+Notice that
+\[\lim_{t \to \infty} y = 0\]
+
+\subsection*{Part IV: Forcing}
+Example 3: 
+\[\begin{cases}
+    y'' + 4y = 5\cos(3t)\\
+    y(0) = 1\\
+    y'(-4)
+\end{cases}\]
+
+Solution:
+\begin{enumerate}
+    \item Homogeneous solution $y'' + 4y = 0$
+    \[y_0 (t) = A \cos(2t) + B \sin(2t)\] 
+
+    \item Particular solution 
+    Check resonance: $5\cos (3t) \implies r = 3i$ but 3i is not a root of the aux equation so there is no resonance 
+    \[y_p = A \cos(3t) + B\sin(3t)\]
+
+    \[( A \cos(3t) + B\sin(3t))'' + 4( A \cos(3t) + B\sin(3t)) = 5\cos(3t)\]
+    \[-9A \cos(3t) - 9B \sin(3t) + 4A\cos(3t) + 4B \sin(3t) = 5\cos(3t)\]
+    \[-5A\cos(3t ) - 5B \sin (3t) = 5\cos(3t)\]
+    \[\begin{cases}
+        -5A = 5\\
+        -5B = 0
+    \end{cases} \implies A = -1, \quad B = 0\]
+    \[y_p = -\cos(3t)\]
+
+    \item General solution
+    \[y = A\cos(2t) + B\sin(2t) - \cos(3t)\]
+
+    \item Initial Conditions 
+    \[1 = A - 1 \implies A = 2\]
+    \[-4 = -4\sin(2(0)) + 2B\cos(2(0)) + 3\sin(3(0))\]
+    \[-4 = 2B \implies B = -2\]
+    \[\boxed{y = 2\cos(2t) - 2\sin(2t) -\cos(3t)}\]
+\end{enumerate}
+
+\subsection*{Part V - Resonance} 
+Ex 4:
+\[\begin{cases}
+    y'' + 4y = 12\cos(2t)\\
+    y(0) = 1\\
+    y'(0)= 6
+\end{cases}\]
+Solution:
+\begin{enumerate}
+    \item Homogeneous
+    \[y_0 = A\cos(2t) + B\sin(2t)\]
+    \item Particular 
+    \[12\cos(2t) \implies r = 2i\]
+    So we have resonance 
+    \[y_p = At\cos(2t) + Bt\sin(2t)\]
+
+    \item General 
+    \[y = \cos(2t) + 3\sin(2t) + 3t\sin(2t)\]
+\end{enumerate}
+
+\section{Lecture Nov 16: Inhomogeneous Systems}
+\subsection*{Part I - Undetermined Coefficients}
+Example 2: Find a particular solutions $x_p$ to $x' = Ax + f$ where 
+\[A = \begin{bmatrix}
+    7 & -3\\
+    8 & -3
+\end{bmatrix} \quad f = \begin{bmatrix}
+    2e^{2t}\\
+    8e^{2t}
+\end{bmatrix}\]
+
+Solution:
+\begin{enumerate}
+    \item Eigenvalues 
+    \[|A - \lambda I| = \begin{bmatrix}
+        7 - \lambda & -3\\
+        8 & -3 - \lambda
+    \end{bmatrix} = (7 - \lambda)(-3-\lambda) + 24 = 0\]
+    \[\lambda^2 - 4\lambda + 3 \implies \lambda = \{1, \; 3\}\]
+
+    \[e^{2t} \implies \lambda = 2\]
+    which does not coincide with the roots of the system so no resonance occurs 
+
+    \item Undetermined coefficients
+    \[f = e^{2t} \begin{bmatrix}
+        2\\8
+    \end{bmatrix}\]
+    \[x_p = \begin{bmatrix}
+        Ae^{2t}\\
+        Be^{2t}
+    \end{bmatrix}\]
+
+    \[x_p' = Ax_p + f\]
+    \[\begin{bmatrix}
+        Ae^{2t}\\
+        Be^[2t]
+    \end{bmatrix}' = \begin{bmatrix}
+        7 & -3\\
+        8 & -3
+    \end{bmatrix} \begin{bmatrix}
+        Ae^{2t}\\
+        Be^{2t}
+    \end{bmatrix} + \begin{bmatrix}
+        2e^{2t}\\
+        8e^{2t}
+    \end{bmatrix}\]
+    \[= \begin{bmatrix}
+        2Ae^{2t}\\
+        2Be^{2t}
+    \end{bmatrix} = \begin{bmatrix}
+        (7A - 3B + 2)e^{2t}\\
+        (8A - 3B + 8)e^{2t}
+    \end{bmatrix}\]
+
+    \[\begin{cases}
+        2A = 7A - 3B + 2\\
+        2B = 8A - 3B + 8
+    \end{cases} \implies \begin{cases}
+        -5A + 3B = 2\\
+        -8A + 5B = 8
+    \end{cases} \implies \begin{cases}
+        A = 14\\
+        B = 24
+    \end{cases}\]
+
+    \[\boxed{x_p = e^{2t} \begin{bmatrix}
+        14\\24
+    \end{bmatrix}}\]
+\end{enumerate}
+
+Example 2: Solve $x' = Ax + f$ where
+\[A = \begin{bmatrix}
+    2 & -1\\
+    3 & -2
+\end{bmatrix} \quad f = \begin{bmatrix}
+    e^{2t}\\
+    e^{2t} + 4e^{3t}
+\end{bmatrix}\]
+
+Homogeneous solution:
+\[|A - \lambda I| = (2 - \lambda)(-2 - \lambda) + 3 = 0\]
+\[\lambda^2 - 1 = 0 \implies \lambda = \pm 1\]
+\[e^{2t} \implies \lambda = 2 \quad \text{(no resonance)}\]
+
+Cases:
+\begin{enumerate}
+    \item $\lambda = 1$
+    \[\begin{bmatrix}
+        1 & -1 & 0\\
+        3 & -3 & 0
+    \end{bmatrix} \implies x_1 - x_2 = 0\]
+    \[\vec{v}_{\lambda = 1} = \begin{bmatrix}
+        1\\1
+    \end{bmatrix}\]
+
+    \item $\lambda = -1$
+    \item \[\begin{bmatrix}
+        3 & -1 & 0\\
+        3 & -1 & 0
+    \end{bmatrix} \implies 3x_1 - x_2 = 0\]
+    \[\vec{v}_{\lambda = -1} = \begin{bmatrix}
+        1\\3
+    \end{bmatrix}\]
+\end{enumerate}
+
+\[x_0 = C_1 e^{t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + C_2 e^{-t} \begin{bmatrix}
+    1\\3
+\end{bmatrix}\]
+
+Undetermined coefficients:
+\[f = \begin{bmatrix}
+    e^{2t}\\
+    e^{2t} + 4e^{3t}
+\end{bmatrix} = e^{2t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + e^{3t} \begin{bmatrix}
+    0\\4
+\end{bmatrix}\]
+
+\[x_p = e^{2t} \begin{bmatrix}
+    A\\B
+\end{bmatrix} + e^{3t} \begin{bmatrix}
+    C\\D
+\end{bmatrix} = \begin{bmatrix}
+    Ae^{2t} + Ce^{3t}\\
+    Be^{2t} + De^{3t}
+\end{bmatrix}\]
+
+\[x_p' = Ax_p + f\]
+\[\begin{bmatrix}
+    2Ae^{2t} + 3Ce^{3t}\\
+    2Be^{2t} + 3De^{3t}
+\end{bmatrix} = \begin{bmatrix}
+    2Ae^{2t} + 2Ce^{3t} - Be^{2t} - De^{3t}\\
+    3Ae^{2t} + 3Ce^{3t} - 2Be^{2t} - 2De^{3t}
+\end{bmatrix} + \begin{bmatrix}
+    e^{2t}\\
+    e^{2t} + 4e^{3t}
+\end{bmatrix}\]
+
+\[\begin{bmatrix}
+    2Ae^{2t} + 3Ce^{3t}\\
+    2Be^{2t} + 3De^{3t}
+\end{bmatrix} = \begin{bmatrix}
+    (2A - B + 1)e^{2t} + (2C - D)e^{3t}\\
+    (3A - 2B + 1)e^{2t} + (3C - 2D + 4)e^{3t}
+\end{bmatrix}\]
+
+Comparing the $e^{2t}$ terms:
+\[\begin{cases}
+    2A = 2A - B + 1\\
+    2B = 3A - 2B + 1
+\end{cases} \implies \begin{cases}
+    B = 1\\
+    3A = 4B - 1 = 3 
+\end{cases} \implies \begin{cases}
+    A = 1\\
+    B = 1
+\end{cases}\]
+
+Comparing the $e^{3t}$ terms:
+\[\begin{cases}
+    3C = 2C - D\\
+    3D = 3C - 2D + 4
+\end{cases} \implies \begin{cases}
+    C = -D\\
+    3D = 3(-D) - 2D + 4
+\end{cases} \implies \begin{cases}
+    C = -\frac{1}{2}\\
+    D = \frac{1}{2}
+\end{cases}\]
+
+\[x_p = e^{2t}\begin{bmatrix}
+    1\\1
+\end{bmatrix} + e^{3t} \begin{bmatrix}
+    -1/2\\
+    1/2
+\end{bmatrix}\]
+
+\[\boxed{x = x_0 + x_p = C_1 e^t \begin{bmatrix}
+    1\\1
+\end{bmatrix} + C_2 e^{-t} \begin{bmatrix}
+    1\\3
+\end{bmatrix} + e^{2t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + e^{3t} \begin{bmatrix}
+    -1/2\\
+    1/2
+\end{bmatrix}}\]
+
+\subsection*{Part II - Who's that particular solution?}
+Example 4: Guess the form of the particular solution to $x' = Ax + f$ where 
+\[A = \begin{bmatrix}
+    1 & 1\\
+    4 & 1
+\end{bmatrix}\]
+
+Eigenvalues:
+\[|A - \lambda I| \implies \lambda = \{-1, \; 3\}\]
+
+Where f is given by:
+\begin{enumerate}
+    \item $f = \begin{bmatrix}
+        e^{2t}\\
+        e^{2t}
+    \end{bmatrix}$
+    No resonance so 
+    \[\boxed{x_p = e^{2t} \begin{bmatrix}
+        A\\B
+    \end{bmatrix}}\]
+
+    \item $f = \begin{bmatrix}
+        2e^{2t} - 3e^{4t}\\
+        e^{2t} + e^{4t}
+    \end{bmatrix} = e^{2t} \begin{bmatrix}
+        2\\1
+    \end{bmatrix} + e^{4t} \begin{bmatrix}
+        -3\\1
+    \end{bmatrix}$
+    Again no resonance:
+    \[\boxed{x_p = e^{2t} \begin{bmatrix}
+        A\\B
+    \end{bmatrix} + e^{4t} \begin{bmatrix}
+        C\\D
+    \end{bmatrix}}\]
+
+    \item $f= \begin{bmatrix}
+        \cos(3t)\\
+        2\cos(3t)
+    \end{bmatrix}$
+    \[\cos(3t) \implies \lambda = \pm 3i\]
+    No resonance:
+    \[\boxed{x_0 = \cos(3t) \begin{bmatrix}
+        A\\B
+    \end{bmatrix}+ \cos(3t) \begin{bmatrix}
+        C\\D
+    \end{bmatrix}}\]
+
+    \item $f = \begin{bmatrix}
+        3t^2 + 4t - 6\\
+        2t + 3
+    \end{bmatrix}$
+    \[\boxed{x_p = \begin{bmatrix}
+        At^2 + Ct + E\\
+        Bt^2 + Dt + F
+    \end{bmatrix}}\]
+    (Note $2t + 3$ is a degenerate case of $At^2 + Bt +C$)
+
+    \item $f  =\begin{bmatrix}
+        te^{2t} \cos(3t)\\
+        4e^{2t} \sin (3t)
+    \end{bmatrix}$
+    \[\boxed{x_p = \left(\begin{bmatrix}
+        A\\B
+    \end{bmatrix}t + \begin{bmatrix}
+        C\\D
+    \end{bmatrix}\right)e^{2t}\cos(3t) + \left(\begin{bmatrix}
+        E\\F
+    \end{bmatrix}t + \begin{bmatrix}
+        G\\H
+    \end{bmatrix}\right)e^{2t} \sin(3t)}\]
+
+    \item $f = \begin{bmatrix}
+        e^{3t}\\
+        2e^{3t}
+    \end{bmatrix}$
+    Here, $e^{3t} \implies \lambda = 3$ which coincides with one of the eigenvalues, causing resonance. So,
+    \[\boxed{x_p = \left(\begin{bmatrix}
+        A\\B
+    \end{bmatrix} + \begin{bmatrix}
+        C\\D
+    \end{bmatrix}t \right) e^{3t}}\]
+    (Note: the usual guess is $t3^{3t}$ but the systems analog is $(At +B)e^{3t}$)
+\end{enumerate}
+
+Example 5: Guess the form of the particular solution of $x' = Ax + f$ where the eigenvalues of A are $\lambda = 2$ (repeated) and where
+\[f = \begin{bmatrix}
+    (t+3)e^{2t}\\
+    t^2 e^{2t}
+\end{bmatrix}\]
+
+Solution:
+Double resonance leads to two $At^2 + Bt + C$ terms so 
+\[\boxed{x_p = \left(\begin{bmatrix}
+    A\\B
+\end{bmatrix} t^4 + \begin{bmatrix}
+    C\\D
+\end{bmatrix}t^3 + \begin{bmatrix}
+    E\\F
+\end{bmatrix} t^2 + \begin{bmatrix}
+    G\\H
+\end{bmatrix} t + \begin{bmatrix}
+    I\\J
+\end{bmatrix}\right)e^{2t}}\]
+
+Example 6: Guess the form of the particular solution of $x' = Ax + f$ where the eigenvalues of A are $\lambda = 2 \pm 3i$ (repeated) and where
+\[f = \begin{bmatrix}
+    t^3 e^{2t} \cos(3t)\\
+    e^t
+\end{bmatrix}\] 
+
+$t^3$ becomes a cubic term but with resonance we have a quadratic term so: 
+
+\begin{empheq}[box=\fbox]{align*}
+    x_p &= \left(\begin{bmatrix}
+        A\\B
+    \end{bmatrix} t^ 5+ \begin{bmatrix}
+        C\\D
+    \end{bmatrix}t^4 + \begin{bmatrix}
+        E\\F
+    \end{bmatrix} t^3 + \begin{bmatrix}
+        G\\H
+    \end{bmatrix} t^2 + \begin{bmatrix}
+        I\\J
+    \end{bmatrix}t + \begin{bmatrix}
+        K\\L
+    \end{bmatrix}\right)e^{2t} \cos(3t)\\
+    &+ \left(\begin{bmatrix}
+        M\\N
+    \end{bmatrix} t^ 5+ \begin{bmatrix}
+        O\\P
+    \end{bmatrix}t^4 + \begin{bmatrix}
+        Q\\R
+    \end{bmatrix} t^3 + \begin{bmatrix}
+        S\\T
+    \end{bmatrix} t^2 + \begin{bmatrix}
+        U\\V
+    \end{bmatrix}t + \begin{bmatrix}
+        W\\X
+    \end{bmatrix}\right)e^{2t} \sin(3t) + \begin{bmatrix}
+        Y\\Z
+    \end{bmatrix} e^t
+\end{empheq}
+
+\section{Lecture Nov 18: Variation of Parameters}
+\subsection*{Part I - Cramer's Rule}
+Example 1: Solve 
+\[\begin{bmatrix}
+    -5 & 3\\
+    3 & -1
+\end{bmatrix} \begin{bmatrix}
+    x\\y
+\end{bmatrix} = \begin{bmatrix}
+    \mathbf{9}\\\mathbf{5}
+\end{bmatrix}\]
+
+\[x = \frac{\begin{vmatrix}
+    \mathbf{9} & 3\\
+    \mathbf{-5} & -1
+\end{vmatrix}}{\begin{vmatrix}
+    -5 & 3\\
+    3 & -1
+\end{vmatrix}} = \frac{(9)(-1) - 3(-5)}{(-5)(-1) - 3(3)} = -\frac{3}{2}\]
+
+\[y = \frac{\begin{vmatrix}
+    -5 & \mathbf{9}\\
+    3 & \mathbf{-5}
+\end{vmatrix}}{\begin{vmatrix}
+    -5 & 3\\
+    3 & -1
+\end{vmatrix} = \frac{(-5)(-5) - 9(3)}{-4}} = \frac{1}{2}\]
+
+\[\begin{bmatrix}
+    x\\y
+\end{bmatrix} = \begin{bmatrix}
+    -3/2\\
+    1/2
+\end{bmatrix}\]
+
+\subsection*{Part II - The Wronskian Matrix}
+\emph{Definition:} The Wronskian of $f(t)$ and $g(t)$ is 
+\[\begin{bmatrix}
+    f(t) & g(t)\\
+    f'(t) & g'(t)
+\end{bmatrix}\]
+
+Example 2: The wronskian of $e^{2t}$ and $e^{3t}$
+\[\begin{bmatrix}
+    e^{2t} & e^{3t}
+    2e^{2t} & 3e^{3t}
+\end{bmatrix}\]
+
+\subsection*{Part III - Variation of Parameters}
+Example 3: Use variation of parameters to solve $y'' - 5y' + 6y = e^t$
+\begin{enumerate}
+    \item Put in standard form
+    
+    \item Find $y_0$
+    \[y_0(t) = Ae^{2t} + Be^{3t}\]
+
+    \item Find the particular solution 
+    Main idea: Guess 
+    \[y_p = u(t) e^{2t} + v(t) e^{3t}\]
+
+    \item Find u and v 
+    \[(u(t) e^{2t} + v(t) e^{3t})'' - 5(u(t) e^{2t} + v(t) e^{3t})' + 6(u(t) e^{2t} + v(t) e^{3t}) = e^t\]
+    \[\implies \begin{cases}
+        e^{2t} u'(t) + e^{3t} v'(t) = 0\\
+        (2e^{2t}) u'(t) + 3e^{3t} v'(t) = e^t
+    \end{cases}\]
+
+    \item Writing as a matrix system 
+    \[\begin{bmatrix}
+        e^{2t} & e^{3t}\\
+        2e^{2t} + 3e^{3t}
+    \end{bmatrix} \begin{bmatrix}
+        u'(t)\\
+        v'(t)
+    \end{bmatrix} = \begin{bmatrix}
+        0\\
+        e^t
+    \end{bmatrix}\]
+
+    Notice! 
+    \[\begin{bmatrix}
+        \text{Wronskian}
+    \end{bmatrix} \begin{bmatrix}
+        u'\\
+        v'
+    \end{bmatrix} = \begin{bmatrix}
+        0 \\
+        \text{Inhomogeneous}
+    \end{bmatrix}\]
+
+    \item Solve using Cramer's rule 
+    \[u' = \frac{\begin{vmatrix}
+        0 & e^{3t}\\
+        e^{t} & 3e^{3t}
+    \end{vmatrix}}{\begin{vmatrix}
+    e^{2t} & e^{3t}\\
+    2e^{2t} + 3e^{3t}
+    \end{vmatrix}} = \frac{0 - e^{3t} (e^t)}{e^{2t} (3e^{3t}) - (e^{3t})(2e^{2t})} = \frac{-e^{4t}}{e^{5t}} = -e^{-t}\]
+
+    \[v' = \frac{\begin{vmatrix}
+        e^{2t} & 0\\
+        2e^{2t} & e^t
+    \end{vmatrix}}{\begin{vmatrix}
+    e^{2t} & e^{3t}\\
+    2e^{2t} + 3e^{3t}
+    \end{vmatrix}} = \frac{0 - (e^{2t})(e^t)}{e^{2t} (3e^{3t}) - (e^{3t})(2e^{2t})} = \frac{-e^{3t}}{e^{5t}} = -e^{-2t}\]
+
+    \[\begin{cases}
+        u'(t) = -e^{-t}\\
+        v'(t) = e^{-2t}
+    \end{cases} \implies \begin{cases}
+        u(t) = \int u' \; dt = e^{-t}\\
+        v(t) = \int v' \; dt = -\frac{1}{2}e^{-2t}
+    \end{cases}\]
+
+    \item Final particular solution 
+    \[y_p = u(t) e^{2t} v(t) e^{3t}\] 
+    \[y_p = e^{-t} e^{2t} -\frac{1}{2}e^{-2t} e^{3t} \]
+    \[y_p = \frac{1}{2}e^t\]
+
+    \item General Solution 
+    \[y = y_0 + y_p = \boxed{Ae^{2t} + Be^{3t} + \frac{1}{2}e^t}\]
+\end{enumerate}
+
+Example 4: $y'' + y = \tan t$
+Homogeneous Equation: 
+\[y_0 = A \cos(t) + B\sin(t)\]
+
+Particular solution:
+\[y_p = u(t) \cos(t) + v(t) \sin(t)\]
+
+\[\begin{bmatrix}
+    \cos(t) & \sin(t)\\
+    -\sin(t) & \cos(t)
+\end{bmatrix} \begin{bmatrix}
+    u'\\
+    v'
+\end{bmatrix} = \begin{bmatrix}
+    0\\
+    \tan t
+\end{bmatrix}\]
+
+\[u' = \frac{\begin{vmatrix}
+    0 & \sin(t)\\
+    \tan t & \cos(t)
+\end{vmatrix}}{\begin{vmatrix}
+    \cos(t) & \sin(t)\\
+    -\sin(t) & \cos(t)
+\end{vmatrix}} = \frac{0 - \sin t \tan t}{1} = -\sin t \tan t\]
+
+\[v' = \frac{\begin{vmatrix}
+    \cos(t) & 0\\
+    -\sin(t) & \tan(t)
+\end{vmatrix}}{\begin{vmatrix}
+    \cos(t) & \sin(t)\\
+    -\sin(t) & \cos(t)
+\end{vmatrix}} = \frac{0 - \cos t \tan t}{1} = \sin t\]
+
+\[\begin{cases}
+    u' = - \sin t \tan t\\
+    v' = \sin t
+\end{cases} = \begin{cases}
+    u = \int - \sin t \tan t \; dt = \int \frac{-1 + \cos^2 t}{\cos t} = \int -\sec t + \cos t\; dt = - \ln | \sec t + \tan t| + \sin t\\
+    v = - \cos t
+\end{cases}\]
+
+Particular solution:
+\[y_p = u \cos t + v \sin t\]
+\[y_p = (-\ln |\sec t + \tan t| + \sin t) \cos t - \sin t \cos t = - \cos t \ln |\sec t + \tan t|\]
+
+General Solution:
+\[\boxed{y = A \cos t + B \sin t - \ln | \sec(t) + \tan(t)| \cos t}\]
+
+\section{Lecture Nov 21: Inhomogeneous Systems (II)}
+\subsection*{Part I - Variation of Parameters}
+Example 1: Solve $x' = Ax + f$ where 
+\[A = \begin{bmatrix}
+    7 & -3\\
+    8 & -3
+\end{bmatrix} \quad f = \begin{bmatrix}
+    2e^{2t}\\
+    8e^{2t}
+\end{bmatrix}\] 
+
+Homogeneous Solution:
+\[|A - \lambda I | = (7 - \lambda)(-3 - \lambda) + 24 = 0 \]
+\[\lambda^2 - 4\lambda + 3 = (\lambda - 3)(\lambda - 1) = 0 \implies \lambda = \{1, \; 3\}\]
+
+\[\vec{v}_{\lambda = 1} = \begin{bmatrix}
+    1\\2
+\end{bmatrix} \quad \vec{v}_{\lambda = 3} = \begin{bmatrix}
+    3\\4
+\end{bmatrix}\]
+
+\[x_0 = C_1 e^t \begin{bmatrix}
+    1\\2
+\end{bmatrix} + C_2 e^{3t} \begin{bmatrix}
+    3\\4
+\end{bmatrix} = C_1 \begin{bmatrix}
+    e^t\\
+    2e^t
+\end{bmatrix} + C_2 \begin{bmatrix}
+    3e^{3t}\\
+    4e^{3t}
+\end{bmatrix}\]
+
+Suppose the particular solution is of the form $u(t) \begin{bmatrix}
+    e^t\\
+    2e^t
+\end{bmatrix} + v(t) \begin{bmatrix}
+    3e^{3t}\\
+    4e^{3t}
+\end{bmatrix}$
+
+Var of Par equations:
+\[\begin{bmatrix}
+    e^t & 3e^{3t}\\
+    2e^t & 4e^{3t}
+\end{bmatrix} \begin{bmatrix}
+    u'(t)\\
+    v'(t)
+\end{bmatrix} = \begin{bmatrix}
+    2e^{2t}\\
+    8e^{2t}
+\end{bmatrix}\]
+
+\[u' = \frac{\begin{vmatrix}
+    2e^{2t} & 3e^{3t}\\
+    8e^{2t} & 4e^{3t}
+\end{vmatrix}}{\begin{vmatrix}
+    e^t & 3e^{3t}\\
+    2e^t & 4e^{3t}
+\end{vmatrix}} = \frac{(2e^{2t})(4e^{3t}) - (8e^{2t})(3e^{3t})}{(e^t)(4e^{3t}) - (2e^t)(3e^{3t})} = \frac{-16e^{5t}}{-2e^{4t}} = 8e^t\]
+
+\[v' = \frac{\begin{vmatrix}
+    e^t & 2e^{2t}\\
+    2e^t & 8e^{2t}
+\end{vmatrix}}{\begin{vmatrix}
+    e^t & 3e^{3t}\\
+    2e^t & 4e^{3t}
+\end{vmatrix}} = \frac{(e^{t})(8e^{2t}) - (2e^{t})(2e^{2t})}{(e^t)(4e^{3t}) - (2e^t)(3e^{3t})} = \frac{4e^{3t}}{-4e^{4t}} = -2e^{-t}\]
+
+\[\begin{cases}
+    u'(t) = 8e^t\\
+    v'(t) = -e^{-t}
+\end{cases} \implies \begin{cases}
+    u(t) = \int 8e^t \; dt = 8e^t\\
+    v(t) = \int -2e^{-t} \; dt = 2e^{-t}
+\end{cases}\]
+
+\[y_p = 8e^t \begin{bmatrix}
+    e^t\\
+    2e^t
+\end{bmatrix} + e^{-t} \begin{bmatrix}
+    3e^{3t}\\
+    4e^{3t}
+\end{bmatrix} = \begin{bmatrix}
+    14^{2t}\\
+    24^{2t}
+\end{bmatrix}\]
+
+General solution:
+\[\boxed{y = C_1 \begin{bmatrix}
+    e^t\\
+    2e^t
+\end{bmatrix} + C_2 \begin{bmatrix}
+    3e^{3t}\\
+    4e^{3t}
+\end{bmatrix} + \begin{bmatrix}
+    14e^{2t}\\
+    24e^{2t}
+\end{bmatrix}}\]
+
+\subsection*{Part II - Why this works}
+Let $x_1(t) = \begin{bmatrix}
+    e^t\\
+    2e^t
+\end{bmatrix}$ and $x_2(t) = \begin{bmatrix}
+    3e^{3t}\\
+    4e^{3t}
+\end{bmatrix}$ (these solve $x' = Ax$)
+
+Then suppose $x_p = u(t) x_1 (t) + v(t) x_2(t)$. Plug this into $x' = Ax + f$
+\[x_p' = Ax_p + f\]
+
+\[(u(t) x_1 (t) + v(t) x_2(t))' = A(u(t) x_1 (t) + v(t) x_2(t)) + f\]
+\[u' x_1 + ux_1' + v'x_2 + vx_1' = uAx_1 + vAx_2 + f\]
+But! Because $x_1$ and $x_2$ solve $x' = Ax$, $x_1' = Ax_1$ and $x_2' = Ax_2$ so terms cancel and we have:
+\[u' x_1 + v'x_2 = f\]
+\[\begin{bmatrix}
+    e^t\\
+    2e^t
+\end{bmatrix} u'(t) + \begin{bmatrix}
+    3e^{3t}\\
+    4e^{3t}
+\end{bmatrix} v'(t) = \begin{bmatrix}
+    2e^{2t}\\
+    8e^{2t}
+\end{bmatrix}\]
+
+\[\begin{bmatrix}
+    3e^{3t} & 2e^{2t}\\
+    4e^{3t} & 8e^{2t}
+\end{bmatrix} \begin{bmatrix}
+    u'(t)\\
+    v'(t)
+\end{bmatrix} = \begin{bmatrix}
+    2e^{2t}\\
+    8e^{2t}
+\end{bmatrix}\]
+
+Which is our var of par equation! 
+
+\subsection*{Part III - Trig Example}
+Example 2: Find a particular sol to $x' = Ax + f$
+\[A = \begin{bmatrix}
+    2 & -5\\
+    1 & -2
+\end{bmatrix} \quad f = \begin{bmatrix}
+    -\cos t\\
+    5 \sin t
+\end{bmatrix}\]
+
+Homogeneous:
+\[\lambda = i \longrightarrow \vec{v} = \begin{bmatrix}
+    2 + i\\
+    1
+\end{bmatrix}\]
+
+\[e^{it} \begin{bmatrix}
+    2+i\\
+    1
+\end{bmatrix} = \left(\cos(t) + i \sin(t)\right)\left(\begin{bmatrix}
+    2\\1
+\end{bmatrix} + i\begin{bmatrix}
+    1\\0
+\end{bmatrix}\right)\]
+
+\[x(t) = C_1 \left(\cos(t) \begin{bmatrix}
+    2\\1
+\end{bmatrix} - \sin(t) \begin{bmatrix}
+    1\\0
+\end{bmatrix}\right) + C_2 \left(\cos(t) \begin{bmatrix}
+    1\\0
+\end{bmatrix} + \sin(t) \begin{bmatrix}
+    2\\1
+\end{bmatrix}\right)\]
+
+\[x_t = C_1 \begin{bmatrix}
+    2 \cos t - \sin t\\
+    \cos t
+\end{bmatrix} + C_2 \begin{bmatrix}
+    \cos t + 2 \sin t\\
+    \sin t
+\end{bmatrix}\]
+
+\[\begin{bmatrix}
+    2 \cos t - \sin t & \cos t + 2 \sin t\\
+    \cos t & \sin t
+\end{bmatrix} \begin{bmatrix}
+    u'\\
+    v'
+\end{bmatrix} = \begin{bmatrix}
+    -\cos t\\
+    5 \sin t
+\end{bmatrix}\]
+
+\[u' = \frac{\begin{vmatrix}
+    - \cos t & \cos t + 2 \sin t\\
+    5 \sin t & \sin t
+\end{vmatrix}}{\begin{vmatrix}
+    2 \cos t - \sin t & \cos t + 2 \sin t\\
+    \cos t & \sin t
+\end{vmatrix}} = \frac{-\cos t \sin t - 5\sin t \cos t - 10 \sin^2 t}{2 \cos t \sin - \sin^2 t - \cos^2 t - 2\cos t \sin t} \] 
+\[= \frac{-6 \cos t \sin t - 10\sin^2 t}{-1} = 6 \cos t \sin t + 10\sin^2 t\]
+
+\[v' = \frac{\begin{vmatrix}
+    2 \cos t - \sin t & - \cos t\\
+    \cos t & 5\sin t
+\end{vmatrix}}{\begin{vmatrix}
+    2 \cos t - \sin t & \cos t + 2 \sin t\\
+    \cos t & \sin t
+\end{vmatrix}} = \frac{10\cos t \sin t- 5 \sin^2 t + \cos^2 t}{2 \cos t \sin - \sin^2 t - \cos^2 t - 2\cos t \sin t} \]
+\[= - 10 \cos t \sin t - 5\sin^2 t + \cos^2 t\]
+
+\begin{align*}
+    u(t) &= \int 6\cos t \sin t + 10\sin^2 t \; dt\\
+    &= \int 6 \left(\frac{\sin (2t)}{2}\right) + 10 \left(\frac{1 - \cos(2t)}{2}\right) \; dt\\
+    &= \int 3 \sin (2t) + 5 - 5 \cos (2t) \; dt \\
+    &= 3\left(\frac{-\cos(2t)}{2}\right) + 5t - 5\left(\frac{\sin (2t)}{2}\right)\\
+    &= -\frac{3}{2} \cos (2t) + 5t - \frac{5}{2}\sin (2t)
+\end{align*}
+
+\begin{align*}
+    v(t) &= \int -10 \cos t \sin t + 5\sin^2 t - \cos^2 (2t) \; dt\\
+    &= \int - 10\left(\frac{1}{2}\sin (2t)\right) + 5 \left(\frac{1- \cos (2t)}{2}\right) - \left(\frac{1+ \cos (2t)}{2}\right) \; dt\\
+    &= \int -5\sin(2t) + \frac{5}{2} - \frac{5}{2} \cos(2t) - \frac{1}{2} - \frac{1}{2} \cos (2t) \; dt\\
+    &= \frac{5}{2} \cos(2t) + 2t - \frac{3}{2} \sin (2t)
+\end{align*}
+
+\begin{empheq}[box=\fbox]{align*}
+    x_p(t) &= \left(-\frac{3}{2} \cos (2t) + 5t - \frac{5}{2}\sin (2t)\right) \begin{bmatrix}
+        2\cos t - \sin t\\
+        \cos t
+    \end{bmatrix} \\
+    &+ \left(\frac{5}{2} \cos(2t) + 2t - \frac{3}{2} \sin (2t)\right) \begin{bmatrix}
+        \cos t + 2\sin t\\
+        \sin t 
+    \end{bmatrix}
+\end{empheq}
+
+\section{Lecture Nov 28: Laplace transform}
+\subsection*{Part I - Introduction}
+Definition:
+\[\mathcal{L}\{f(t)\} = \int_0^{\infty} f(t) \, e^{-st} \; dt\]
+
+\includegraphics{Images/laplace.png}
+
+\subsection*{Part II - Examples}
+Example 1: $\mathcal{L}\{1\}$
+\[\mathcal{L}\{1\} = \int_0^{\infty} 1e^{-st} \; dt = \int_0^{\infty} e^{st} \; dt = \left[\frac{e^{-st}}{-s}\right]_0^{\infty} = 0 + \frac{1}{s} = \boxed{\frac{1}{s}}\]
+
+Example 2: $\mathcal{L}\{e^2t\}$
+\[\mathcal{L}\{e^2t\} = \int_0^\infty e^(2- s) t\; dt = \left[\frac{e^{(2 - s)t}}{2 -s}\right]_0^\infty = 0 - \frac{1}{2 - s} = \boxed{\frac{1}{2 - s}}\]
+
+\textbf{FACT:}
+\[\boxed{\mathcal{L}\{e^{at}\} = \frac{1}{s - a} \quad (\text{if } s > a)}\]
+
+Example 4: $\mathcal{L}\{\cos(2t)\}$ and $\mathcal{L}\{\sin (2t)\}$
+\[\mathcal{L}\{\cos(2t)\} = \int_0^\infty \cos (2t) e^{-st}\; dt \]
+
+Trick:
+\[\mathcal{L}\{e^{(2t)i}\} = \mathcal{L}\{\cos (2t) + i \sin (2t)\} = \mathcal{L}\{\cos (2t)\} + i \mathcal{L}\{\sin (2t)\}\]
+
+Then, 
+\[\mathcal{L}\{e^{(2t)i}\} = \mathcal{L}\{e^{(2i)t}\} = \frac{1}{s - 2i} = \frac{s + 2i}{s^2 + 4} = \left(\frac{s}{s^2 + 4}\right) + i\left(\frac{2}{s^2 + 4}\right)\]
+
+So,
+\[\L{\cos(2t)} = \frac{s}{s^2 + 4}\]
+\[\L{\sin(2t)} = \frac{2}{s^2 + 4}\]
+
+\textbf{FACT:}
+\[\boxed{\L{\cos(at)} = \frac{s}{s^2 + a^2} \quad \quad \L{\sin (at)} = \frac{a}{s^2 + a^2}}\]
+
+Example 5: $\L{2 \sin (3t) + 4e^{5t}}$
+\[= 2 \L \sin(3t) + 4 \L{e^5t} = \boxed{\frac{6}{s^2 + 9} + \frac{4}{s - 5}}\]
+
+Example 6: $\L{U_2(t)}$
+\[U_2(t) = \begin{cases}
+    0 \quad t < 2\\
+    1 \quad t \geq 2
+\end{cases}\]
+"The Heaviside function at 2" - used for unit impulse, etc. 
+
+\[\L{U_2(t)} = \int_0^\infty U_2(t) e^{-st} \; dt =  \int_0^2 0 e^{-st} \; dt + \int_2^\infty 1 e^{-st} = \left[\frac{e^{st}}{-s}\right]_2^\infty = \boxed{\frac{e^{-2s}}{s}}\]
+
+Example 7: Which function has laplace transform 
+\[\frac{2}{s + 1} - \frac{4}{s - 3}\] 
+
+\[= 2\L{e^{-t}} - 4 \L{e^{3t}} = \boxed{\L{2e^{-t} - 4e^{3t}}}\]
+
+\subsection*{Part III - Tabular Integration}
+Example 8: $\L{t^3} = \int_0^\infty t^3 \, e^{-st} \; dt$
+
+Solution:
+\[\begin{array}{c c c c}
+    + & t^3 & & e^{-st}\\
+    - & 3t^2 & \searrow  & e^{-st} / (-s)\\
+    + & 6t & \searrow  & e^{-st} / (-s)^2\\
+    - & 6 & \searrow  & e^{-st} / (-s)^3\\
+    + & 0 & \searrow  & e^{-st} / (-s)^4\\
+\end{array}\]
+
+\[\implies \left[t^3 \left(\frac{e^{-st}}{-s}\right) - 3t^3 \left(\frac{e^{-st}}{(-s)^2}\right) + 6t \left(\frac{e^{-st}}{(-s)^3}\right) - 6 \left(\frac{e^{-st}}{(-s)^4}\right)\right]_0^\infty\] 
+\[= 0 - (\frac{-6}{s^4}) = \boxed{\frac{6}{s^4}}\]
+
+\textbf{FACT:}
+\[\boxed{\L{t^n} = \frac{n!}{s^{n+1}}}\]
+\end{document}   
