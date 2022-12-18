@@ -1,0 +1,354 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\allsectionsfont{\sffamily\mdseries\upshape} 
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{empheq}
+
+\renewcommand{\L}[1]{\mathcal{L}\{#1\}}
+
+\title{Ordinary Differential Equations Cheat Sheet}
+\author{Milan Capoor}
+\date{Fall 2022}
+
+\begin{document}
+\maketitle
+
+\section{The Fundamental Equation}
+For equations of the form:
+\[y' = k y\] 
+
+Solution:
+\[\boxed{y = Ce^{k t}}\]
+
+\section{Classification}
+\begin{enumerate}
+    \item \emph{Order:} highest number of derivatives
+    \item \emph{Homogeneous:} if the RHS is 0
+    \item \emph{Inhomogeneous:} if the RHS is not 0
+    \item \emph{Linear:} the coefficients depend on t but not y
+    \item \emph{Nonlinear:} the coefficients depend on y
+\end{enumerate}
+
+\section{Solve by Separation}
+For equations of the form:
+\[y' = \frac{f(t)}{g(t)}\]
+
+Solution:
+\begin{enumerate}
+    \item Rearrange so all y's on one side, all t's on other
+    \item Cross multiply by $dx$
+    \item Integrate each side (note: +C only needs to be on one side)
+    \item Isolate $y$
+\end{enumerate}
+
+Example:
+\[\int g(t) \; dy = \int f(t) \; dx \]
+
+\subsection*{The Logistic Equation:}
+Equations of the form:
+\[y' = \alpha y (1 - \frac{y}{\beta})\]
+
+Solution:
+\[\boxed{y = \frac{\beta Ce^{At}}{1 + Ce^{\alpha t}}}\]
+
+\section{Integrating Factors:}
+For equations of the form:
+\[y' + ky = f(t)\]
+
+Solution:
+\begin{enumerate}
+    \item Multiply each side by $e^{kt}$
+    \item Reduce the LHS to a product rule derivative
+    \item Integrate both sides
+    \item Isolate $y$
+\end{enumerate}
+
+\subsection*{More general integrating factors}
+For equations of the form:
+\[y' + P(t) y = f(t)\]
+
+Use 
+\[e^{\int P(t) \; dt}\]
+as the integrating factor with the method described above
+
+\section{Exact Equations:}
+For equations of the form:
+\[P(x, y)\; dx + Q(x, y)\; dy = 0\]
+
+Solution:
+\begin{enumerate}
+    \item Check that $F = \langle P, Q \rangle$ is conservative ($P_y = Q_x$ -- mnemonic "Peyam is quixotic")
+    \item Find the potential function f for which $F = \nabla f$ (integrate P and Q, creating a function of all terms)
+    \item The solution of the corresponding ODE will simply be 
+    \[\boxed{f = C}\]
+\end{enumerate}
+
+\subsection*{Non exact equations}
+For nonexact equations, multiply the entire ODE by the given integrating factor (found using PDEs)
+
+\section{Euler's Method}
+The value of y at a point can be approximated:
+\[y_{n + 1} \approx y_n + \left(\frac{t_n - t_0}{N}\right) \; y'(y_n, t_n)\]
+
+\section{Modelling Higher order equations as systems}
+Example: $y'' + 4y = 0$
+
+Solution:
+\[\begin{cases}
+    x_1(t) = y\\
+    x_2(t) = y'
+\end{cases} \implies \begin{cases}
+    x_1' = y' = x_2\\
+    x_2' = y'' = -4y = -4x_1
+\end{cases}\] 
+\[\begin{cases}
+    x_1' = 0x_1 + x_2\\
+    x_2' = -4x_1 + 0x_2
+\end{cases}\]
+
+\[\vec{x}'(t) = \begin{bmatrix}
+    0 & 1\\
+    -4 & 0
+\end{bmatrix} \vec{x}(t)\]
+
+\section{Systems of ODE}
+Given an equation in the form 
+\[x' = Ax\]
+
+The solution is of the form
+\[\boxed{x(t) = C_1 e^{\lambda_1 \, t}\; \vec{v}_{\lambda_1} + C_2 e^{\lambda_2\, t}\; \vec{v}_{\lambda_2}}\]
+
+\subsection*{Complex Eigenvalues}
+Essential formula:
+\[e^{it} = \cos t + i \sin t\]
+
+To solve a system of ODE with complex eigenvalues $\pm  \lambda$,
+\begin{enumerate}
+    \item Find the eigenvector for one of the complex eigenvalues (say $\lambda$)
+    \item Trick: during the gaussian elimination, choose one of the two rows to 0 and solve the other to get the eigenvector 
+    \item \[e^{(\lambda i)t} \begin{bmatrix}
+        x_1 + x_3 i\\
+        x_2 + x_4 i
+    \end{bmatrix} = (\cos (\lambda t) + i \sin (\lambda t))\left(\begin{bmatrix}
+        x_1\\x_2
+    \end{bmatrix} + i \begin{bmatrix}
+        x_3\\x_4
+    \end{bmatrix}\right)\]
+    \item Distribute the above equation to get a real term $\vec{x}_1$ and an imaginary term $\vec{x}_2$
+    \item The general solution will then be in the form 
+    \[\boxed{\vec{x}(t) = C_1 \vec{x}_1 + C_2 \vec{x}_2}\]
+\end{enumerate}
+
+\subsection*{Repeated Eigenvalues}
+To solve a system of ODE with a repeated eigenvalue $\lambda$:
+\begin{enumerate}
+    \item Find the first eigenvector $\vec{v}$ as normal
+    \item Find the generalized eigenvector $\vec{w}$ by solving by row reduction $(A - \lambda I) \vec{w} = \vec{v}$
+    \item The general solution will be in the form
+    \[\boxed{x(t) = C_1e^{\lambda t} \; \vec{v} + C_2 (te^{\lambda t} \vec{v} + e^{\lambda t} \vec{w})}\]
+\end{enumerate}
+
+Note: do not rescale the generalized eigenvector
+
+\section{Matrix Exponentials}
+Note that equations in the form 
+\[x' = Ax\]
+are analagous to equations of the form 
+\[y' = ky\]
+
+Thus, to solve
+\[\boxed{x = Ce^{At} = Pe^{Dt}P^{-1} \begin{bmatrix}
+    C_1\\
+    C_2
+\end{bmatrix}}\]
+
+\subsection*{Matrix Exponentials wih repeated eigenvalues}
+For $2 \times 2$ matrices with one eigenvalue,
+\[(A - \lambda I)^2 = 0\]
+
+Thus, in the Taylor expansion of the matrix exponentiation, all higher terms for to zero.
+\[e^{At} = e^{\lambda t}(I + (A - \lambda I)t)\]
+So,
+\[\boxed{x = (I + (A - \lambda I)t) \begin{bmatrix}
+    C_1\\C_2
+\end{bmatrix}e^{\lambda t} }\]
+
+\section{Equilibrium points of nonlinear systems}
+For systems of the form 
+\[\begin{cases}
+    x' = f(x, y)\\
+    y' = g(x, y)
+\end{cases}\]
+
+Solution: 
+\begin{enumerate}
+    \item Find the nullclines ($x' = 0$ and $y' = 0$) 
+    \item Solve for the equilibrium points
+    \item Find the Jacobian/linearization
+    \[\nabla F = \begin{bmatrix}
+        f_x & f_y\\
+        g_x & g_y
+    \end{bmatrix}\]
+    \item Classify the equilibrium points 
+\end{enumerate}
+
+\subsection*{CLassifying equilibrium points}
+For the equilibrium point $(x, y)$,
+\begin{itemize}
+    \item If both eigenvalues of $F(x, y)$ are positive, it is unstable
+    \item If both eigenvalues are negative, it is stable
+    \item If one positive, one negative, it is a semistable saddle point
+\end{itemize}
+
+\section{2nd Order ODEs}
+For an equation of the form, 
+\[Ay'' + By' + Cy = 0\]
+
+The auxiliary equation is
+\[Ar^2 + Br + C = 0\]
+with roots $r_1$ and $r_2$
+
+The solution will then be in the form 
+\[\boxed{y = C_1e^{r_1\, t} + C_2 e^{r_2\, t}}\]
+
+\subsection*{Complex roots}
+For equations with auxiliary roots of the form $a + bi$, the solution will be in the form:
+\[\boxed{y = e^{at} \left(C_1 \cos(bt) + C_2 \sin(bt)\right)}\]
+
+\subsection*{Repeated roots}
+For equations with with repeated auxiliary roots, the solution will be of the form 
+\[\boxed{y = C_1 e^{rt} + C_2te^{rt}}\]
+
+\section{Boundary value problems}
+Find the eigenvalues and eigenfunctions of equations of the form
+\[y'' = \lambda y\]
+
+Solution:
+\begin{enumerate}
+    \item Identify the auxiliary equation $r^2 = \lambda$
+    \item In the case $\lambda > 1$, search for nonzero solutions where $r = \pm \omega$, for a positive number $\omega$
+    \item Case $\lambda = 0$: search for nonzero solutions
+    \item Case $\lambda < 0$: $r = \pm \omega i \quad (\omega > 0)$
+    \item Parameterize the infinite solutions with aa positive integer $m$
+\end{enumerate}
+\section{Inhomogeneous equations}
+Solution:
+\begin{enumerate}
+    \item Find the homogeneous solution $y_0$ using the auxiliary equation
+    \item Find any particular solution $y_p$
+    \item The general solution will then be of the form
+    \[\boxed{y = y_0 + y_p} \]
+\end{enumerate}
+
+\subsection*{Undetermined coefficients}
+To find the particular solution, make an initial guess based on the form of the inhomogeneous term:
+\begin{itemize}
+    \item if RHS is $e^{rt}$, guess $Ae^{rt}$
+    \item if RHS is a polynomial, guess the general degree polynomial
+    \item if RHS is sin or cos, guess $A\cos(rt) + B\sin(rt)$
+\end{itemize}
+
+The substitute the guess for y in the original ODE and solve for the constants
+
+\subsection*{Resonance}
+If the guess of the particular solution from the undetermined coefficients method has the same root(s) as the homoegenous solution, add a resonance term
+
+Example: if the naive guess is $Ae^{rt}$ but the root $r$ coincides, guess
+\[Ate^{rt}\]
+
+\subsection*{Variation of parameters}
+This is an alternative method to Undetermined coefficients where the particular solution to an equation of the form 
+\[Ay'' + By' + Cy = f(t)\]
+will be of the form 
+\[y_p = u(t) e^{r_2\, t} + v(t) e^{r_2\,t}\]
+
+To solve for u and v, solve the Wronskian matrix 
+\[\begin{bmatrix}
+    e^{r_1t} & e^{r_2 t}\\
+    r_1 e^{r_1 t} & r_2 e^{r_2 t}
+\end{bmatrix} \begin{bmatrix}
+    u'\\
+    v'
+\end{bmatrix} = \begin{bmatrix}
+    0\\
+    f
+\end{bmatrix}\]
+using Cramer's rule where f is the inhomogeneous term/
+
+Then integrate $u'$ and $v'$ to find the final coefficients.
+
+\subsection*{Variation of parameters for matrix systems}
+For equations of the form
+\[x' = Ax + f\]
+
+The method of variation of parameters will be the same but the var par equation is instead 
+\[A\begin{bmatrix}
+    u'\\
+    v'
+\end{bmatrix}= \vec{f}\]
+
+\section{Laplace transform}
+Fundamental equation:
+\[\L{f(t)} = \int_0^\infty f(t) e^{-st}\; dt\]
+
+Laplace transform table:
+\begin{center} 
+    \resizebox{0.7\linewidth}{!}{%
+        \begin{tabular}{|c|c|}
+            \hline
+            $f(t)$ & $\L{f(t)}$\\
+            \hline
+            $1$ & $\frac{1}{s}$\\
+            $e^{at}$ & $\frac{1}{s - a}$\\
+            $t^n$ & $\frac{n!}{s^{n+1}}$\\
+            $\sin(at)$ & $\frac{a}{s^2 + a^2}$\\
+            $\cos(at)$ & $\frac{s}{s^2 + a^2}$\\
+            $u_c(t)$ & $\frac{e^{-cs}}{s}$\\
+            $u_c f(t-c)$ & $e^{cs} \L{f(t)}$\\
+            $e^{at} f(t)$ & $f(s - a)$\\
+            $\delta(t - c)$ & $e^{-cs}$\\
+            $y'$ & $s\L{y} - y(0)$\\
+            $y''$ & $s^2 \L{y} - sy(0) - y'(0)$\\
+            \hline
+        \end{tabular}
+    }    
+\end{center}
+
+\[(f\star g)(t) = \int_0^t f(t - \tau) g(\tau)\; d\tau\]
+
+To solve an ODE with laplace transforms:
+\begin{enumerate}
+    \item Take the laplace of each term
+    \item rearrange to the form 
+    \[\L{y} = f(s)\]
+    \item Manipulate the RHS into a sum of known laplace compositions
+    \item Take the inverse laplace of those transforms
+\end{enumerate}
+
+\end{document}
