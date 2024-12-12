@@ -1,0 +1,464 @@
+\documentclass[12pt]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx} 
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array} 
+\usepackage{paralist} 
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{mathtools}
+\usepackage{empheq}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt} 
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\allsectionsfont{\sffamily\mdseries\upshape} 
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage[titles,subfigure]{tocloft}
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} %
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{APMA 0350: Homework 10}
+\author{Milan Capoor}
+\date{2 December 2022}
+
+\begin{document}
+\maketitle
+\textbf{Problem 1:} Use undetermined coefficients to find the general solution of $x' = Ax + f$ where 
+\[A = \begin{bmatrix}
+    1 & 1\\
+    4 & -2
+\end{bmatrix} \quad f = \begin{bmatrix}
+    e^{-2t}\\
+    -2e^t
+\end{bmatrix}\]
+
+Eigenvalues: 
+\[\det (A - \lambda I) = 0 \implies (1 - \lambda)(-2 - \lambda) - 4 = 0\]
+\[\lambda^2 + \lambda - 6 = (\lambda + 3)(\lambda - 2) = 0\]
+\[\lambda = \{2, \; -3\}\]
+
+Eigenvector $\lambda = 2$:
+\[\left[\begin{array}{c c | c}
+    -1 & 1 & 0\\
+    4 & -4 & 0
+\end{array}\right] \implies -x_1 + x_2 = 0\]
+\[\vec{v}_{\lambda = 2} = \begin{bmatrix}
+    1\\1
+\end{bmatrix}\]
+
+Eigenvector $\lambda = -3$:
+\[\left[\begin{array}{c c | c}
+    4 & 1 & 0\\
+    4 & 1 & 0
+\end{array}\right] \implies 4x_1 + x_2 = 0\]
+\[\vec{v}_{\lambda = -3} = \begin{bmatrix}
+    1\\-4
+\end{bmatrix}\]
+
+Homogeneous solution:
+\[x_0 = Ae^{2t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + Be^{-3t} \begin{bmatrix}
+    1\\-4
+\end{bmatrix}\]
+
+Roots of inhomogeneous term: $r = \{-2, \; 1\} \longrightarrow$ (no resonance)
+
+Particular solution:
+\[f = e^{-2t} \begin{bmatrix}
+    1\\0
+\end{bmatrix} + e^t \begin{bmatrix}
+    0\\-2
+\end{bmatrix}\]
+\[x_p = e^{-2t} \begin{bmatrix}
+    A\\B
+\end{bmatrix} + e^t \begin{bmatrix}
+    C\\D\
+\end{bmatrix} = \begin{bmatrix}
+    Ae^{-2t} + Ce^t\\
+    Be^{-2t} + De^t
+\end{bmatrix}\]
+
+\[x_p' = Ax_p + f\]
+\begin{align*}
+    \begin{bmatrix}
+        -2Ae^{2t} + Ce^t\\
+        -2Be^{-2t} + De^t
+    \end{bmatrix} &= \begin{bmatrix}
+    1 & 1\\
+    4 & -2
+    \end{bmatrix} \begin{bmatrix}
+        Ae^{-2t} + Ce^t\\
+        Be^{-2t} + De^t
+    \end{bmatrix} + \begin{bmatrix}
+        e^{-2t}\\
+        -2e^t
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        Ae^{-2t} + Be^{-2t} + Ce^t + De^t\\
+        4Ae^{-2t} + 4Ce^t - 2Be^{-2t} - 2De^t
+    \end{bmatrix} + \begin{bmatrix}
+        e^{-2t}\\
+        -2e^t
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        Ae^{-2t} + Be^{-2t} + Ce^t + De^t + e^{-2t}\\
+        4Ae^{-2t} + 4Ce^t - 2Be^{-2t} - 2De^t -2e^t
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        (A + B + 1)e^{-2t} + (C + D)e^t\\
+        (4A - 2B)e^{-2t} + (4C - 2D - 2)e^t
+    \end{bmatrix}
+\end{align*}
+
+\[\begin{cases}
+    A + B + 1 = -2A\\
+    C + D = C\\
+    4A - 2B = -2B\\
+    4C - 2D - 2 = D
+\end{cases} \implies \begin{cases}
+    A = 0\\
+    B = -1\\
+    C = 1/2\\
+    D = 0
+\end{cases}\]
+
+\[x_p = \begin{bmatrix}
+    Ae^{-2t} + Ce^t\\
+    Be^{-2t} + De^t
+\end{bmatrix}\]
+
+\[x_p = \begin{bmatrix}
+    \frac{1}{2}e^t\\
+    -e^{-2t}
+\end{bmatrix}\]
+
+General solution:
+\[x = x_0 + x_p\]
+\[x = Ae^{2t} \begin{bmatrix}
+    1\\1
+\end{bmatrix} + Be^{-3t} \begin{bmatrix}
+    1\\-4
+\end{bmatrix} + \begin{bmatrix}
+    \frac{1}{2}e^t\\
+    -e^{-2t}
+\end{bmatrix}\]
+\[\boxed{x = \begin{bmatrix}
+    Ae^{2t} + Be^{-3t} + \frac{1}{2}e^t\\
+    Ae^{2t} - 4Be^{3t} - e^{-2t}
+\end{bmatrix}}\]
+
+\pagebreak
+
+\textbf{Problem 2:} Guess the form of a particular
+solution to $x' = Ax + f$ where
+\[A = \begin{bmatrix}
+    2 & -1\\
+    -1 & 2
+\end{bmatrix}\]
+\[\det (A - \lambda I) = (2 - \lambda)^2 - 1 = \lambda^2 - 4\lambda + 3 = (\lambda - 3)(\lambda - 1)\]
+\[\lambda = \{1, \; 3\}\]
+
+\begin{enumerate}
+    \item \[\mathbf{f = \begin{bmatrix}
+        e^{2t}\\
+        2e^{2t}
+    \end{bmatrix}}\]
+
+    Solution:
+    \[f = e^{2t} \begin{bmatrix}
+        1\\2
+    \end{bmatrix} \quad (\lambda = 2)\]
+    No resonance so 
+    \[\boxed{x_p = \begin{bmatrix}
+        Ae^{2t}\\
+        Be^{2t}
+    \end{bmatrix}}\]
+
+    \item \[\mathbf{f = \begin{bmatrix}
+        3e^{2t}\\
+        -e^{4t}
+    \end{bmatrix}}\]
+
+    Solution:
+    \[f = e^{2t} \begin{bmatrix}
+        3\\0
+    \end{bmatrix} + e^{4t} \begin{bmatrix}
+        0\\-1
+    \end{bmatrix} \quad (\lambda = \{2, \; 4\})\]
+    No resonance so 
+    \[\boxed{x_p = e^{2t} \begin{bmatrix}
+        A\\B
+    \end{bmatrix} + e^{4t} \begin{bmatrix}
+        C\\D
+    \end{bmatrix}}\]
+
+    \item \[\mathbf{f = \begin{bmatrix}
+        \cos (2t)\\
+        \sin (3t)
+    \end{bmatrix}}\]
+
+    Solution: 
+    \[\boxed{x_p = \cos(2t) \begin{bmatrix}
+        A\\B
+    \end{bmatrix} + \sin(2t) \begin{bmatrix}
+        C\\D
+    \end{bmatrix} + \cos(3t) \begin{bmatrix}
+        E\\F
+    \end{bmatrix} + \sin(3t) \begin{bmatrix}
+        G\\H
+    \end{bmatrix}}\]
+   
+    \item \[\mathbf{f = \begin{bmatrix}
+        t^2\\
+        te^{5t}
+    \end{bmatrix}}\]
+
+    Solution:
+    \[\begin{bmatrix}
+        At^2 + Ct\\
+        bt^2 + Dt
+    \end{bmatrix}e^{5t}\]
+\end{enumerate}
+
+\pagebreak 
+
+\textbf{Problem 3:} Use variation of parameters to find the general solution of the following ODE. Simplify your answers.
+\begin{enumerate}
+    \item \[\mathbf{y'' + 4y' + 4y = \frac{e^{-2t}}{t^2}}\]
+    Homogeneous equation: 
+    \[r^2 + 4r + 4 = (r + 2)^2 = 0 \implies r = -2 \quad (\text{repeated})\]
+    \[y_0 = Ae^{-2t} + Bte^{-2t}\]
+
+    Var par equations:
+    \[\begin{bmatrix}
+        e^{-2t} & te^{-2t}\\
+        -2e^{-2t} & e^{-2t} -2te^{-2t}
+    \end{bmatrix} \begin{bmatrix}
+        u'\\
+        v'
+    \end{bmatrix} = \begin{bmatrix}
+        0\\
+        \frac{e^{-2t}}{t^2}
+    \end{bmatrix}\] 
+
+    \[u'(t) = \frac{\begin{vmatrix}
+       0 & te^{-2t}\\
+       \frac{e^{-2t}}{t^2} & e^{-2t} -2te^{-2t}
+    \end{vmatrix}}{\begin{vmatrix}
+        e^{-2t} & te^{-2t}\\
+        -2e^{-2t} & e^{-2t} -2te^{-2t}
+    \end{vmatrix}} = \frac{-\frac{e^{-4t}}{t}}{e^{-4t} -2te^{-4t} + 2te^{-4t}}\]
+    \[= \frac{-e^{-4t}}{te^{-4t} -2t^2e^{-4t} + 2t^2e^{-4t}} = \frac{1}{t}\]
+
+    \[v'(t) = \frac{\begin{vmatrix}
+        e^{-2t} & 0\\
+         -2e^{-2t} & \frac{e^{-2t}}{t^2} 
+     \end{vmatrix}}{\begin{vmatrix}
+         e^{-2t} & te^{-2t}\\
+         -2e^{-2t} & e^{-2t} -2te^{-2t} \end{vmatrix}} 
+    = \frac{\frac{e^{-4t} }{t^2}}{e^{-4t} -2te^{-4t} + 2te^{-4t}} = \frac{1}{t^2}\]      
+         
+    \[\begin{cases}
+        u'(t) = -\frac{1}{t}\\
+        v'(t) = \frac{1}{t^2}
+    \end{cases} \implies \begin{cases}
+        u(t) = -\ln |t|\\
+        v(t) = -\frac{1}{t}
+    \end{cases}\]
+
+    Particular solution: 
+    \[y_p(t) = u(t) e^{-2t} + v(t) t e^{-2t}\]
+    \[y_p(t) = -\ln |t| e^{-2t} - e^{-2t}\]
+
+    General solution:
+    \[\boxed{y = Ae^{-2t} + Bte^{-2t} - \ln |t| e^{-2t} - e^{-2t}}\]
+
+
+    \item \[\mathbf{t^2 y'' - t(t+2)y' + (t+2)y = 2t^3}\]
+\end{enumerate}
+
+\pagebreak 
+
+\textbf{Problem 4:} Use variation of parameters to find the general solution of $x' = Ax + f$ where
+\[\mathbf{A = \begin{bmatrix}
+    2 & -1\\
+    3 & -2
+\end{bmatrix} \quad f = e^t \begin{bmatrix}
+    1\\
+    -1
+\end{bmatrix}}\]
+
+Homogeneous solution:
+\[\det (A - \lambda I) = (2 - \lambda)(-2 - \lambda) + 3 = \lambda^2 - 1 = (\lambda + 1)(\lambda - 1) = 0\]
+\[\lambda = \{-1, \; 1\}\]
+
+Eigenvector $\lambda = -1$:
+\[\left[\begin{array}{c c | c}
+    3 & -1 & 0\\
+    3 & -1 & 0
+\end{array}\right] \implies 3x_1 - x_2 =0 \]
+\[\vec{v}_{\lambda = -1} = \begin{bmatrix}
+    1\\3
+\end{bmatrix}\]
+
+Eigenvector $\lambda = 1$:
+\[\left[\begin{array}{c c | c}
+    1 & -1 & 0\\
+    3 & -3 & 0
+\end{array}\right] \implies x_1 - x_2 = 0\]
+\[\vec{v}_{\lambda = 1} = \begin{bmatrix}
+    1\\1
+\end{bmatrix}\]
+
+\[x_0 = Ae^{-t}\begin{bmatrix}
+    1\\3
+\end{bmatrix} + Be^t \begin{bmatrix}
+    1\\1
+\end{bmatrix} = A\begin{bmatrix}
+    e^{-t}\\
+    3e^{-t}
+\end{bmatrix} + B \begin{bmatrix}
+    e^t\\
+    e^t
+\end{bmatrix}\]
+
+Particular solution:
+\[x_p = u(t)\begin{bmatrix}
+    e^{-t}\\
+    3e^{-t}
+\end{bmatrix} + v(t) \begin{bmatrix}
+    e^t\\
+    e^t
+\end{bmatrix}\]
+
+\[\begin{bmatrix}
+    e^{-t} & e^t\\
+    3e^{-t} & e^t
+\end{bmatrix} \begin{bmatrix}
+    u'\\
+    v'
+\end{bmatrix} = \begin{bmatrix}
+    e^t\\
+    e^{-t}
+\end{bmatrix}\]
+
+\[u' = \frac{\begin{vmatrix}
+    e^{t} & e^t\\
+    e^{-t} & e^t
+\end{vmatrix}}{\begin{vmatrix}
+    e^{-t} & e^t\\
+    3e^{-t} & e^t
+\end{vmatrix}} = \frac{e^{2t} - 1}{-2} = \frac{-e^{2t}}{2} + \frac{1}{2}\]
+
+\[v' = \frac{\begin{vmatrix}
+    e^{-t} & e^t\\
+    3e^{-t} & e^{-t}
+\end{vmatrix}}{\begin{vmatrix}
+    e^{-t} & e^t\\
+    3e^{-t} & e^t
+\end{vmatrix}} = \frac{e^{-2t} - 3}{-2} = \frac{-e^{2t}}{2} + \frac{3}{2}\]
+\[\begin{cases}
+    u'(t) = \frac{-e^{2t}}{2} + \frac{1}{2}\\
+    v'(t) = \frac{-e^{2t}}{2} + \frac{3}{2}
+\end{cases} \implies \begin{cases}
+    u = \int \frac{-e^{2t}}{2} + \frac{1}{2}\; dt = \frac{-e^{2t}}{4} + \frac{t}{2}\\
+    v= \int \frac{-e^{2t}}{2} + \frac{4}{2}\; dt = \frac{-e^{2t}}{4} + \frac{3t}{2}\\
+\end{cases}\]
+
+\[x_p = \left(\frac{-e^{2t}}{4} + \frac{t}{2}\right)\begin{bmatrix}
+    e^{-t}\\
+    3e^{-t}
+\end{bmatrix} + \left(\frac{-e^{2t}}{4} + \frac{3t}{2}\right) \begin{bmatrix}
+    e^t\\
+    e^t
+\end{bmatrix}\]
+
+\[x_p = \begin{bmatrix}
+    -\frac{1}{4}e^t + \frac{1}{2}te^{-t}\\
+    -\frac{3}{4}e^t + \frac{3}{2}te^{-t}
+\end{bmatrix} + \begin{bmatrix}
+    -\frac{1}{4}e^t + \frac{3}{2}te^{-t}\\
+    -\frac{3}{4}e^t + \frac{9}{2}te^{-t}
+\end{bmatrix} = \begin{bmatrix}
+    -\frac{1}{2}e^t + 2te^{-t}\\
+    -\frac{3}{2}e^t + 6te^{-t}
+\end{bmatrix}\]
+
+General solution:
+\[\boxed{x = A\begin{bmatrix}
+    e^{-t}\\
+    3e^{-t}
+\end{bmatrix} + B \begin{bmatrix}
+    e^t\\
+    e^t
+\end{bmatrix} + \begin{bmatrix}
+    -\frac{1}{2}e^t + 2te^{-t}\\
+    -\frac{3}{2}e^t + 6te^{-t}
+\end{bmatrix}}\]
+
+\pagebreak
+
+\textbf{Problem 5:} Find the general solution of $y'' + y = cos(t)$
+\begin{enumerate}
+    \item Using undetermined coefficients
+    \[r^2 + r = 0 \implies r(r + 1) = 0 \implies r = \{0, \; 1\}\]
+    \[\cos t \implies r = 1\]
+    So we have resonance! 
+    \[y_0 = A + Bte^{t}\]
+
+    \[x_p = A\cos(t) + B\sin(t)\]
+    \[(A\cos(t) + B\sin(t))'' + (A\cos(t) + B\sin(t)) = \cos t\]
+    \[-A\cos(t) - B\sin t + A \cos t + B \sin t\]
+    \[\cos t = 0\]
+    
+    \item Using variation of parameters
+    \[r^2 + r = 0 \implies r(r + 1) = 0 \implies r = \{0, \; 1\}\]
+    \[y_0 = A + Be^t\]
+    \[y_p = u(t) + v(t) e^t\]
+    \[\begin{bmatrix}
+        1 & e^t\\
+        0 & e^t
+    \end{bmatrix} \begin{bmatrix}
+        u'\\
+        v'
+    \end{bmatrix} = \begin{bmatrix}
+        0\\
+        cos(t)
+    \end{bmatrix}\]
+
+    \[u' = \frac{\begin{vmatrix}
+        0 & e^t\\
+        \cos t & e^t
+    \end{vmatrix}}{\begin{vmatrix}
+        1 & e^t\\
+        0 & e^t
+    \end{vmatrix}} = \frac{-e^t\cos t}{e^t} = - \cos t \implies u = - \sin t\]
+
+    \[v' = \frac{\begin{vmatrix}
+        1 & 0\\
+        0 & \cos t
+    \end{vmatrix}}{\begin{vmatrix}
+        1 & e^t\\
+        0 & e^t
+    \end{vmatrix}} = \frac{-\cos t}{e^t} \implies v = \frac{1}{2}e^{-t}\left(\cos t - \sin t\right) \]
+    
+    \[y_p = -\sin t + \frac{1}{2} \cos t - \frac{1}{2} \sin t = -\frac{3}{2}\sin t + \frac{1}{2} \cos t\]
+
+    General solution:
+    \[\boxed{y = A + Be^t -\frac{3}{2}\sin t + \frac{1}{2} \cos t }\]
+\end{enumerate}
+\end{document}
